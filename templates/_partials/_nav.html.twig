@@ -1,0 +1,52 @@
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('assets/style.css') }}">
+{% endblock %}
+
+<nav class="navbar nav_link">
+	<div class="header_nav">
+        <h1>
+            <a href="">LilaLys'Shop</a>
+        </h1>
+		{# <a class="title_site" href="{{ path('main') }}"><img src="{{ asset('assets/images/index/logolinkz.png') }}" alt=""></a> #}
+	</div>
+	<!---collapse navbar-collapse-->
+	<div class="nav_ctn" id="navbarNav">
+		<ul class="navbar_nav_ul">
+            <li class="nav_item_btn">
+                <a href="">DOUDOU</a>
+            </li>
+            <li class="nav_item_btn">
+                <a href="">PATERN</a>
+            </li>
+
+            <div class="menu_profile_nav">
+                {% if app.user %}
+                    <li class="nav_item_rgt">
+                        <a class="nav_a" href="">Deconnection</a>
+                    </li>
+                    <li class="nav_item_rgt">
+                        <a class="nav_a" href="">Appearance</a>
+                    </li>
+                    <li class="nav_item_rgt">
+                        <a class="nav_a" href="">Settings</a>
+                    </li>
+                {% else %}
+                    <li class="nav_item_rgt">
+                        <a class="nav_a" href="">Account creation</a>  
+                    </li>
+                    <li class="nav_item_rgt">
+                        <a class="nav_a" href="">Login</a>
+                    </li>
+                {% endif %}
+                <li class="nav_item_rgt">
+                    {% if app.user %}
+                        <a class="nav_a_ctn" href="">Profile</a>
+                    {% else %}
+                        <a class="nav_a_ctn" href="">Profile</a>
+                    {% endif %}
+                </li>
+            </div>
+			
+		</ul>
+	</div>
+</nav>
