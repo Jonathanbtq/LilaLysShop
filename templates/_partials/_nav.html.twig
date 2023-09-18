@@ -5,7 +5,7 @@
 <nav class="navbar nav_link">
 	<div class="header_nav">
         <h1>
-            <a href="">LilaLys'Shop</a>
+            <a href="{{path('accueil')}}">LilaLys'Shop</a>
         </h1>
 		{# <a class="title_site" href="{{ path('main') }}"><img src="{{ asset('assets/images/index/logolinkz.png') }}" alt=""></a> #}
 	</div>
@@ -19,7 +19,16 @@
                 <a href="">PATERNE</a>
             </li>
             <li class="nav_item_btn">
-                <a href="{{ path('login')}}">Connexion / login</a>
+                <a href="{{ path('login')}}"><img src="{{asset('assets/images/index/user.png')}}" alt=""></a>
+                <ul class="dropdown">
+                    <li><a href="{{path('account', {email: app.user.email} )}}">Compte</a></li>
+                    <li><a href="">Paramétre</a></li>
+                    {% if app.user %}
+                        <li><a href="{{path('logout')}}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{{path('login')}}">Login</a></li>
+                    {% endif %}
+                </ul>
             </li>
 
             <div class="menu_profile_nav">
