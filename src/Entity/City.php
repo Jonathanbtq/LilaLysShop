@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CityRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CityRepository::class)]
@@ -12,31 +13,64 @@ class City
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+    
+    #[ORM\Column(length: 255)]
+    private ?string $insee_code = null;
+    
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $city_code = null;
 
     #[ORM\Column]
     private ?int $zip_code = null;
+    
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $label = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $city_name = null;
+    #[ORM\Column(length: 255)]
+    private ?string $latitude = null;
 
-    #[ORM\Column]
-    private ?float $latitude = null;
-
-    #[ORM\Column]
-    private ?float $longitude = null;
+    #[ORM\Column(length: 255)]
+    private ?string $longitude = null;
 
     #[ORM\Column(length: 50)]
     private ?string $department_name = null;
 
-    #[ORM\Column]
-    private ?int $department_number = null;
+    #[ORM\Column(length: 50)]
+    private ?string $department_number = null;
 
     #[ORM\Column(length: 50)]
     private ?string $region_name = null;
 
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $region_geojson_name = null;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getInseeCode(): ?string
+    {
+        return $this->insee_code;
+    }
+
+    public function setInseeCode(string $insee_code): static
+    {
+        $this->insee_code = $insee_code;
+
+        return $this;
+    }
+
+    public function getCityCode(): ?string
+    {
+        return $this->city_code;
+    }
+
+    public function setCityCode(string $city_code): static
+    {
+        $this->city_code = $city_code;
+
+        return $this;
     }
 
     public function getZipCode(): ?int
@@ -51,36 +85,36 @@ class City
         return $this;
     }
 
-    public function getCityName(): ?string
+    public function getLabel(): ?string
     {
-        return $this->city_name;
+        return $this->label;
     }
 
-    public function setCityName(string $city_name): static
+    public function setLabel(string $label): static
     {
-        $this->city_name = $city_name;
+        $this->label = $label;
 
         return $this;
     }
 
-    public function getLatitude(): ?float
+    public function getLatitude(): ?string
     {
         return $this->latitude;
     }
 
-    public function setLatitude(float $latitude): static
+    public function setLatitude(string $latitude): static
     {
         $this->latitude = $latitude;
 
         return $this;
     }
 
-    public function getLongitude(): ?float
+    public function getLongitude(): ?string
     {
         return $this->longitude;
     }
 
-    public function setLongitude(float $longitude): static
+    public function setLongitude(string $longitude): static
     {
         $this->longitude = $longitude;
 
@@ -99,12 +133,12 @@ class City
         return $this;
     }
 
-    public function getDepartmentNumber(): ?int
+    public function getDepartmentNumber(): ?string
     {
         return $this->department_number;
     }
 
-    public function setDepartmentNumber(int $department_number): static
+    public function setDepartmentNumber(string $department_number): static
     {
         $this->department_number = $department_number;
 
@@ -119,6 +153,18 @@ class City
     public function setRegionName(string $region_name): static
     {
         $this->region_name = $region_name;
+
+        return $this;
+    }
+
+    public function getRegionGeojsonName(): ?string
+    {
+        return $this->region_geojson_name;
+    }
+
+    public function setRegionGeojsonName(string $region_geojson_name): static
+    {
+        $this->region_geojson_name = $region_geojson_name;
 
         return $this;
     }
