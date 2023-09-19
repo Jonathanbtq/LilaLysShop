@@ -1,0 +1,10 @@
+.prf_wth form{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.prf_wth form div{
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+}

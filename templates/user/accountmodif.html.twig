@@ -3,12 +3,41 @@
 {% block title %}Account{% endblock %}
 
 {% block body %}
-{{dump(user)}}
-<h2>Détails</h2>
-
 <div class="prf_ctn">
     <div class="prf_wth">
+        <h2>Détails</h2>
         <form action="POST" method="POST">
+            {{ form_start(form) }}
+
+            {{ form_row(form.name)}}
+            {{ form_row(form.email)}}
+            {{ form_row(form.telephone)}}
+            <div class="form_acc_mdf">
+                <label for="">Rue</label>
+                <input type="text">
+            </div>
+            
+            <div class="form_acc_mdf">
+                <label for="">Complément d'adresse</label>
+                <input type="text">
+            </div>
+
+            <div class="form_acc_mdf">
+                <label for="">Ville</label>
+                <input type="text">
+            </div>
+
+            <div class="form_acc_mdf">
+                <label for="">Code postal</label>
+                <input type="text">
+            </div>
+
+            <div class="form_acc_mdf">
+                <label for="">Pays</label>
+                <input type="text">
+            </div>
+
+            {{ form_end(form) }}
             {# <div class="form_acc_lft">
                 <label>Nom</label>
                 <input type="text">
