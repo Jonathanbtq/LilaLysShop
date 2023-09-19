@@ -31,6 +31,9 @@ class Adresse
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $complement_adrr = null;
 
+    #[ORM\ManyToOne]
+    private ?Pays $pays = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -115,6 +118,18 @@ class Adresse
     public function setComplementAdrr(?string $complement_adrr): static
     {
         $this->complement_adrr = $complement_adrr;
+
+        return $this;
+    }
+
+    public function getPays(): ?Pays
+    {
+        return $this->pays;
+    }
+
+    public function setPays(?Pays $pays): static
+    {
+        $this->pays = $pays;
 
         return $this;
     }
