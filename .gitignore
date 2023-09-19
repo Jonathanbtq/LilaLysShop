@@ -12,6 +12,7 @@
 *.env.example
 *.env.local
 *.env.staging
+.add.txt
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Account{% endblock %}
+
+{% block body %}
+{{dump(user)}}
+<h2>Détails</h2>
+
+<div class="prf_ctn">
+    <div class="prf_wth">
+        <form action="POST" method="POST">
+            {# <div class="form_acc_lft">
+                <label>Nom</label>
+                <input type="text">
+                <label>Nom de la société</label>
+                <input type="text">
+                <label>Téléphone</label>
+                <input type="text">
+                <label>Ville</label>
+                <input type="text">
+                <label>Pays</label>
+                <input type="text">
+            </div>
+            <div class="form_acc_rgt">
+                <label>Courriel</label>
+                <input type="text">
+                <label>Rue</label>
+                <input type="text">
+                <label>Code postal</label>
+                <input type="text">
+                <input type="submit">
+            </div> #}
+            
+        </form>
+    </div>
+</div>
+{% endblock %}

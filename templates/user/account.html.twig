@@ -1,8 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Account{% endblock %}
 
 {% block body %}
 {{dump(user)}}
 <p>Welcome {{user.email}}</p>
+
+<div class="prf_ctn">
+    <div class="prf_wth">
+        <div class="prf_middle_dct">
+            <div class="prf_document">
+                <h2>Documents</h2>
+                <ul>
+                    <li><a href="">Bons de commande</a></li>
+                    <li><a href="">Factures</a></li>
+                    <li><a href="">Service après-vente</a></li>
+                </ul>
+            </div>
+            <div class="prf_account">
+                <h2>Détails<a href="">Modifier</a></h2>
+                <p>{{user.email}}</p>
+                <p>{{user.email}}</p>
+                <h2>Sécurité du compte</h2>
+                <a href="">Modifier les paramètres de sécurité</a>
+            </div>
+        </div>
+    </div>
+</div>
+<i class="fa fa-enveloppe fa-fw" role="img" aria-label="Courriel"></i>
 {% endblock %}
