@@ -21,7 +21,12 @@
             <li class="nav_item_btn">
                 <a href="{{ path('login')}}"><img src="{{asset('assets/images/index/user.png')}}" alt=""></a>
                 <ul class="dropdown">
-                    <li><a href="{{path('account', {email: app.user.email} )}}">Compte</a></li>
+                    {% if app.user %}
+                        <li><a href="{{path('account', {email: app.user.email} )}}">Compte</a></li>
+                    {% else %}
+                        <li><a href="{{path('login')}}">Compte</a></li>
+                    {% endif %}
+
                     {% if app.user %}
                         <li><a href="{{path('logout')}}">Logout</a></li>
                     {% else %}

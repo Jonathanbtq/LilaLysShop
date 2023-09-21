@@ -35,7 +35,7 @@ class AccountModifFormType extends AbstractType
             ])
             ->add('adresse', EntityType::class, [
                 'class' => Adresse::class,
-                'choice_label' => 'pays_id.nom', // Affichez la colonne "nom" de la table "pays"
+                'choice_label' => 'pays.nom', // Affichez la colonne "nom" de la table "pays"
                 'label' => 'Pays',
                 'placeholder' => 'Sélectionnez un pays', // Texte facultatif pour l'option par défaut
                 'multiple' => false, // Pour permettre la sélection d'un seul pays
