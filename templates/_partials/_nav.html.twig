@@ -1,7 +1,6 @@
 {% block stylesheets %}
 	<link rel="stylesheet" href="{{ asset('assets/style.css') }}">
 {% endblock %}
-
 <nav class="navbar nav_link">
 	<div class="header_nav">
         <h1>
@@ -26,7 +25,9 @@
                     {% else %}
                         <li><a href="{{path('login')}}">Compte</a></li>
                     {% endif %}
-
+                    {% if app.user.roles[0] == "ROLE_ADMIN" %}
+                        <li><a href="{{path('admin_adminindex')}}">Admin</a></li>
+                    {% endif %}
                     {% if app.user %}
                         <li><a href="{{path('logout')}}">Logout</a></li>
                     {% else %}
