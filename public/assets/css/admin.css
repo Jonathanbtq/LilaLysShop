@@ -1,0 +1,25 @@
+.adm_show_prd{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.adm_show_card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: grey;
+    border-radius: 5px;
+    margin-right: 10px;
+    height: 15vw;
+    width: 15vw;
+}
+.adm_show_card p{
+    color: white;
+    padding: 0;
+    margin: 0;
+}
+.adm_show_card img{
+    width: 250px;
+    height: 250px;
+}

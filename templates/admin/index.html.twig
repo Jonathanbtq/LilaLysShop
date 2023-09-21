@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+<div class="admin_wth">
+    <div class="admin_ctn">
+        <div class="admin_top">
+            <h2>Panel d'administration</h2>
+            <p>Cette page est réserver à la mise en place de produits et la gérance du site</p>
+        </div>
+        <div class="admin_product_add">
+            <div class="adm_top_prd">
+                <h2>Ajout de produits</h2>
+                <a href="{{path('admin_adminnewproduct')}}">+</a>
+            </div>
+            <h2>tout les produits</h2>
+            <div class="adm_show_prd">
+                {# {{dump(produits)}} #}
+                {% for produit in produits %}
+                    <div class="adm_show_card">
+                        <img src="{{asset('assets/images/products/marmotte.jpg')}}" alt="">
+                        <p>{{ produit.name }}</p>
+                        <p>{{ produit.price }}$</p>
+                        <p>#{{produit.category.getName}}</p>
+                        {# {{ produit.stock_quantity }} #}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
