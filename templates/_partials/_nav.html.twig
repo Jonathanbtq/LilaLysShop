@@ -26,8 +26,10 @@
                     {% endif %}
                 </li>
                 <li class="nav_item_btn">
-                    {% if app.user.name != null %}
-                        <a class="idx_acc_a" href="{{ path('login')}}">{{app.user.name}} v</a>
+                    {% if app.user %}
+                        {% if app.user.name != null %}
+                            <a class="idx_acc_a" href="{{ path('login')}}">{{app.user.name}} v</a>
+                        {% endif %}
                     {% else %}
                         <a href="{{ path('login')}}"><img src="{{asset('assets/images/index/user.png')}}" alt=""></a>
                     {% endif %}

@@ -1,6 +1,7 @@
 .index_ctn{
     display: flex;
     width: 100%;
+    padding-top: 100px;
     justify-content: center;
 }
 .index_wtd{
@@ -68,6 +69,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    margin-bottom: 20px;
 }
 .idx_shop_main{
     display: flex;
@@ -79,9 +81,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: grey;
+    border: 1px solid #f2f2f2;
     border-radius: 5px;
-    margin-right: 10px;
     height: 15vw;
     width: 15vw;
     position: relative;
@@ -92,7 +93,6 @@
     width: 100%;
 }
 .idx_shop_card p{
-    color: white;
     padding: 0;
     margin: 0;
 }

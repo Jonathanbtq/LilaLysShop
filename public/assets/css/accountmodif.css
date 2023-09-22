@@ -1,4 +1,9 @@
+.prf_ctn{
+    display: flex;
+    padding-top: 100px;
+}
 .prf_wth form{
+    padding: 100px;
     display: flex;
     flex-wrap: wrap;
     width: 100%;

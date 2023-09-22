@@ -19,13 +19,22 @@
                 {# {{dump(produits)}} #}
                 {% for produit in produits %}
                     <div class="adm_show_card">
-                        <img src="{{asset('assets/images/products/marmotte.jpg')}}" alt="">
+                        <img src="/uploads/photos/{{produit.id}}/{{produit.getProductImage}}" alt="">
                         <p>{{ produit.name }}</p>
                         <p>{{ produit.price }}$</p>
                         <p>#{{produit.category.getName}}</p>
                         {# {{ produit.stock_quantity }} #}
                     </div>
                 {% endfor %}
+            </div>
+            <h2>Création de catégory</h2>
+            <div class="adm_cat_add">
+                <a href="{{path('admin_newcategory')}}">New Catégory</a>
+                <div class="adm_cat_show">
+                    {% for category in category %}
+                        {{category.name}}
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>

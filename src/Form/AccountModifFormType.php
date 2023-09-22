@@ -11,8 +11,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AccountModifFormType extends AbstractType
@@ -24,13 +25,13 @@ class AccountModifFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextareaType::class, [
+            ->add('name', TextType::class, [
                 'label' => 'Name'
             ])
-            ->add('email', TextareaType::class, [
+            ->add('email', TextType::class, [
                 'label' => 'Email'
             ])
-            ->add('telephone', TextareaType::class, [
+            ->add('telephone', TextType::class, [
                 'label' => 'Téléphone'
             ])
             ->add('adresse', EntityType::class, [

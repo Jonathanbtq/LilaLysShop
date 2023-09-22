@@ -29,9 +29,7 @@ class CartController extends AbstractController
     public function addToCart(int $productId, ProductRepository $productRepo, CartRepository $cartRepo, PanierProduitRepository $panierProduitRepo): JsonResponse
     {
         // Calcul du nombre d'article
-        $cart = $cartRepo->findOneBy(['user' => $this->getUser()]);
-        $cartItemCount = $cart->getNbProducts();
-
+        // Cherche le carte existant et on récupere le nb d'article deja présent
         $product = $productRepo->findOneBy(['id' => $productId]);
         if($this->getUser()){
             $user = $this->getUser();
@@ -47,7 +45,7 @@ class CartController extends AbstractController
         if($this->getUser()){
             $cart->setUser($this->getUser());
         }
-        $cart->setNbProducts($cartItemCount);
+        $cart->setNbProducts($cart->getNbProducts()+1);
         $cart->setTotalPrice($cart->getTotalPrice()+$product->getPrice());
         $cartRepo->save($cart, true);
 
@@ -75,7 +73,9 @@ class CartController extends AbstractController
         $nbCount = count($panierCount);
 
         $cart = $cartRepo->findOneBy(['user' => $this->getUser()]);
-        $cart->setNbProducts($nbCount);
+        if($nbCount != null){
+            $cart->setNbProducts($nbCount);
+        }
         $cartRepo->save($cart, true);
         $cartItemCount = $cart->getNbProducts();
         return $this->json(['count' => $cartItemCount]);
