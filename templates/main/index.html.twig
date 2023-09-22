@@ -17,9 +17,15 @@
                             <div class="idx_img_main_shop">
                                 <img src="/uploads/photos/{{product.id}}/{{product.getProductImage}}" alt="">
                             </div>
-                            <p>{{ product.name }}</p>
-                            <p>{{ product.price }}$</p>
-                            <p>#{{product.category.getName}}</p>
+                            <div class="idx_main_shop_desc">
+                                <h3>{{ product.name }}</h3>
+                                <p>{{ product.price }}€</p>
+                                <p>#{{product.category.getName}}</p>
+                                {% if product.isHasDiscountedPrice == 1 %}
+                                    <p class="span_promo">Promo !</p>
+                                {% endif %}
+                            </div>
+                            
                             <i class="fa-solid fa-cart-shopping fa-xl btn_main_shop" data-product-id="{{product.id}}"></i>
                         </div>
                     {% endfor %}
