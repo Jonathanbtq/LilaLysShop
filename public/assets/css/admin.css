@@ -1,3 +1,14 @@
+.admin_wth{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.admin_ctn{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
 .adm_show_prd{
     display: flex;
     flex-wrap: wrap;

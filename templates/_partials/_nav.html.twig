@@ -2,68 +2,50 @@
 	<link rel="stylesheet" href="{{ asset('assets/style.css') }}">
 {% endblock %}
 <nav class="navbar nav_link">
-	<div class="header_nav">
-        <h1>
-            <a href="{{path('accueil')}}">LilaLys'Shop</a>
-        </h1>
-		{# <a class="title_site" href="{{ path('main') }}"><img src="{{ asset('assets/images/index/logolinkz.png') }}" alt=""></a> #}
-	</div>
-	<!---collapse navbar-collapse-->
-	<div class="nav_ctn" id="navbarNav">
-		<ul class="navbar_nav_ul">
-            <li class="nav_item_btn">
-                <a href="">DOUDOU</a>
-            </li>
-            <li class="nav_item_btn">
-                <a href="">PATERNE</a>
-            </li>
-            <li class="nav_item_btn">
-                <a href="{{ path('login')}}"><img src="{{asset('assets/images/index/user.png')}}" alt=""></a>
-                <ul class="dropdown">
-                    {% if app.user %}
-                        <li><a href="{{path('account', {email: app.user.email} )}}">Compte</a></li>
-                    {% else %}
-                        <li><a href="{{path('login')}}">Compte</a></li>
-                    {% endif %}
-                    {% if app.user.roles[0] == "ROLE_ADMIN" %}
-                        <li><a href="{{path('admin_adminindex')}}">Admin</a></li>
-                    {% endif %}
-                    {% if app.user %}
-                        <li><a href="{{path('logout')}}">Logout</a></li>
-                    {% else %}
-                        <li><a href="{{path('login')}}">Login</a></li>
-                    {% endif %}
-                </ul>
-            </li>
-
-            <div class="menu_profile_nav">
-                {% if app.user %}
-                    <li class="nav_item_rgt">
-                        <a class="nav_a" href="">Deconnection</a>
-                    </li>
-                    <li class="nav_item_rgt">
-                        <a class="nav_a" href="">Appearance</a>
-                    </li>
-                    <li class="nav_item_rgt">
-                        <a class="nav_a" href="">Settings</a>
-                    </li>
-                {% else %}
-                    <li class="nav_item_rgt">
-                        <a class="nav_a" href="">Account creation</a>  
-                    </li>
-                    <li class="nav_item_rgt">
-                        <a class="nav_a" href="">Login</a>
-                    </li>
-                {% endif %}
-                <li class="nav_item_rgt">
-                    {% if app.user %}
-                        <a class="nav_a_ctn" href="">Profile</a>
-                    {% else %}
-                        <a class="nav_a_ctn" href="">Profile</a>
-                    {% endif %}
+    <div class="nav_center">
+        <div class="header_nav">
+            <h1>
+                <a href="{{path('accueil')}}">LilaLys'Shop</a>
+            </h1>
+            {# <a class="title_site" href="{{ path('main') }}"><img src="{{ asset('assets/images/index/logolinkz.png') }}" alt=""></a> #}
+        </div>
+        <!---collapse navbar-collapse-->
+        <div class="nav_ctn" id="navbarNav">
+            <ul class="navbar_nav_ul">
+                <li class="nav_item_btn">
+                    <a href="">Doudou</a>
                 </li>
-            </div>
-			
-		</ul>
-	</div>
+                <li class="nav_item_btn">
+                    <a href="">Paterne</a>
+                </li>
+                <li class="nav_item_btn">
+                    <a href=""><i class="fa-solid fa-cart-shopping"></i>0</a>
+                </li>
+                <li class="nav_item_btn">
+                    {% if app.user.name != null %}
+                        <a class="idx_acc_a" href="{{ path('login')}}">{{app.user.name}} v</a>
+                    {% else %}
+                        <a href="{{ path('login')}}"><img src="{{asset('assets/images/index/user.png')}}" alt=""></a>
+                    {% endif %}
+                    
+                    <ul class="dropdown">
+                        {% if app.user %}
+                            <li><a href="{{path('account', {email: app.user.email} )}}">Compte</a></li>
+                            {% if app.user.roles[0] == "ROLE_ADMIN" %}
+                                <li><a href="{{path('admin_adminindex')}}">Admin</a></li>
+                            {% endif %}
+                        {% else %}
+                            <li><a href="{{path('login')}}">Compte</a></li>
+                        {% endif %}
+                        {% if app.user %}
+                            <li><a href="{{path('logout')}}">Logout</a></li>
+                        {% else %}
+                            <li><a href="{{path('login')}}">Login</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+	
 </nav>

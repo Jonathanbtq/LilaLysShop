@@ -3,10 +3,9 @@
 {% block title %}Account{% endblock %}
 
 {% block body %}
-<p>Welcome {{user.email}}</p>
-
 <div class="prf_ctn">
     <div class="prf_wth">
+        <p>Welcome {{user.email}}</p>
         <div class="prf_middle_dct">
             <div class="prf_document">
                 <h2>Documents</h2>
@@ -17,10 +16,10 @@
                 </ul>
             </div>
             <div class="prf_account">
-                <h2>Détails<a href="{{path('accountmodif', {email: app.user.email})}}">Modifier</a></h2>
+                <h2 class="h2_acc">Détails<a href="{{path('accountmodif', {email: app.user.email})}}">Modifier</a></h2>
                 <p>{{user.email}}</p>
                 <p>{{user.email}}</p>
-                <h2>Sécurité du compte</h2>
+                <h2 class="h2_acc">Sécurité du compte</h2>
                 <a href="">Modifier les paramètres de sécurité</a>
             </div>
         </div>

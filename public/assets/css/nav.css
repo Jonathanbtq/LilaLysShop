@@ -1,18 +1,24 @@
 .nav_link{
     display: flex;
     flex-wrap: nowrap;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
     background-color: rgb(163, 57, 57);
     width: 100%;
+}
+.nav_center{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: 60%;
 }
 .header_nav{
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: 2vw;
 }
 .header_nav a{
-    font-size: 50px;
+    font-size: 30px;
     text-decoration: none;
     color: white;
 }
@@ -26,20 +32,33 @@
 .navbar_nav_ul{
     display: flex;
     flex-wrap: nowrap;
-    justify-content: space-around;
-    width: 70%;
+    justify-content: end;
+    width: 100%;
+    padding: 0;
+    margin: 0;
 }
 .nav_item_btn{
     position: relative;
+    margin-left: 20px;
     height: 2vw;
+}
+.nav_item_btn i{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }
 .nav_item_btn a{
     display: flex;
+    align-items: center;
     height: 100% !important;
 }
 .nav_item_btn img{
     height: 100%;
     margin-bottom: 10px;
+}
+.idx_acc_a{
+    margin-left: 20px;
 }
 .nav_item_rgt, .nav_item_btn{
     list-style-type: none;
@@ -49,7 +68,7 @@
 }
 .navbar_nav_ul li a{
     text-decoration: none;
-    font-size: 30px;
+    font-size: 25px;
     font-weight: bold;
     color: white;
 }
@@ -83,7 +102,4 @@ background-color: rgb(163, 57, 57);
 .dropdown li a:hover{
     color: white;
     font-weight: 450;
-}
-.menu_profile_nav{
-    display: none;
 }
