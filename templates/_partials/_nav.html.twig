@@ -19,7 +19,11 @@
                     <a href="">Paterne</a>
                 </li>
                 <li class="nav_item_btn">
-                    <a href=""><i class="fa-solid fa-cart-shopping"></i>0</a>
+                    {% if nbProduit.getNbProducts is defined %}
+                        <a class="" href=""><i class="fa-solid fa-cart-shopping cart_count_a">{{nbProduit.getNbProducts}}</i></a>
+                    {% else %}
+                        <a class="" href=""><i class="fa-solid fa-cart-shopping cart_count_a">0</i></a>
+                    {% endif %}
                 </li>
                 <li class="nav_item_btn">
                     {% if app.user.name != null %}
