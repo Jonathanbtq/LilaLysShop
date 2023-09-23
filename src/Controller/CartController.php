@@ -19,7 +19,7 @@ class CartController extends AbstractController
     #[Route('/cart', name: 'cart')]
     public function index(CartRepository $cartRepo): Response
     {
-        $cart = $cartRepo->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+        $cart = $cartRepo->findOneBy(['user' => $this->getUser()]);
         return $this->render('cart/index.html.twig', [
             'cart' =>  $cart
         ]);

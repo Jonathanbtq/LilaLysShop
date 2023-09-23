@@ -1,0 +1,8 @@
+.cart_product{
+    display: flex;
+    width: 70%;
+}
+.cart_price{
+    display: flex;
+    width: 30%;
+}

@@ -3,5 +3,19 @@
 {% block title %}Hello CartController!{% endblock %}
 
 {% block body %}
-{{dump(cart)}}
+{# {{dump(cart)}} #}
+    <div class="index_ctn">
+        <div class="index_wtd">
+            <div class="cart_product">
+                <p>{{cart.user.getName}}</p>
+                <p>{{cart.description}}</p>
+                <p>{{cart.getNbProducts}}</p>
+            </div>
+            <div class="cart_price">
+                <p>{{cart.getTotalPrice}}</p>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}
