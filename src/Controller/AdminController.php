@@ -22,7 +22,7 @@ class AdminController extends AbstractController
     public function index(ProductRepository $produitRepo, CategoryRepository $categoryRepo): Response
     {
         $category = $categoryRepo->findAll();
-        $produits = $produitRepo->findBy([], null, 5);
+        $produits = $produitRepo->findBy([], null, 6);
         return $this->render('admin/index.html.twig', [
             'produits' => $produits,
             'category' => $category

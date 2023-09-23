@@ -20,8 +20,14 @@ class CartController extends AbstractController
     public function index(CartRepository $cartRepo): Response
     {
         $cart = $cartRepo->findOneBy(['user' => $this->getUser()]);
+        $products = $cart->getPanierProduits();
+        $prdArray = [];
+        foreach($products as $prd){
+            $prdArray[] = $prd;
+        }
         return $this->render('cart/index.html.twig', [
-            'cart' =>  $cart
+            'cart' =>  $cart,
+            'products' => $prdArray
         ]);
     }
 
@@ -61,9 +67,7 @@ class CartController extends AbstractController
         // $panierProduitRepo->persist($ligneProduit);
         // $panierProduitRepo->flush();
 
-        $response = ['message' => 'Produit ajouté au panier avec succès'];
-
-        return new JsonResponse($response);
+        return new JsonResponse('', Response::HTTP_NO_CONTENT);
     }
 
     #[Route('/get_item_count', name: "get_item_count")]
@@ -79,5 +83,30 @@ class CartController extends AbstractController
         $cartRepo->save($cart, true);
         $cartItemCount = $cart->getNbProducts();
         return $this->json(['count' => $cartItemCount]);
+    }
+
+    // Ajouter un effet d'attente sur le site pour le temps de réponse du serveur
+    #[Route('/get_pricecart_count', name: "get_pricecart_count")]
+    public function getCartPrice(CartRepository $cartRepo, PanierProduitRepository $panierRepo): JsonResponse
+    {
+        $cart = $cartRepo->findOneBy(['user' => $this->getUser()]);
+        $cartPrice = $cart->getTotalPrice();
+
+        return $this->json(['totalPrice' => $cartPrice]);
+    }
+
+    #[Route('/get_item_delete/{id}', name: "get_item_delete")]
+    public function getCartItemDelete($id, PanierProduitRepository $panierRepo, CartRepository $cartRepo, ProductRepository $productRepo): JsonResponse
+    {
+        $panierCount = $panierRepo->findOneBy(['id_produit' => $id]);
+        $panierRepo->remove($panierCount, true);
+
+        $produit = $productRepo->findOneBy(['id' => $id]);
+
+        $cart = $cartRepo->findOneBy(['user' => $this->getUser()]);
+        $cart->setTotalPrice($cart->getTotalPrice() - $produit->getPrice());
+        $cartRepo->save($cart, true);
+
+        return new JsonResponse('', Response::HTTP_NO_CONTENT);
     }
 }

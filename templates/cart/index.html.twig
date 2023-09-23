@@ -3,16 +3,40 @@
 {% block title %}Hello CartController!{% endblock %}
 
 {% block body %}
-{# {{dump(cart)}} #}
     <div class="index_ctn">
         <div class="index_wtd">
-            <div class="cart_product">
-                <p>{{cart.user.getName}}</p>
-                <p>{{cart.description}}</p>
-                <p>{{cart.getNbProducts}}</p>
-            </div>
-            <div class="cart_price">
-                <p>{{cart.getTotalPrice}}</p>
+            <div class="cart_ctn">
+                <div class="cart_product">
+                    <div class="cart_prd_hdr">
+                        <h2>MON PANIER</h2>
+                        <p>{{cart.description}}</p>
+                    </div>
+                    {% for product in products %}
+                    <div class="cart_prd_check" data-product-id="{{product.getIdProduit.getId}}">
+                        <div class="crt_check_img">
+                            <img src="/uploads/photos/{{product.getIdProduit.getId}}/{{product.getIdProduit.getProductImage}}" alt="">
+                        </div>
+                        <div class="crt_check_details">
+                            <p>{{product.getIdProduit.getName}}</p>
+                            <p>{{product.getIdProduit.getDescription}}</p>
+                            <p>{{product.getIdProduit.getPrice}}</p>
+                            <button data-product-id="{{product.getIdProduit.getId}}" class="cart_delete_product_btn">Supprimer</button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="crt_sous_total">
+                        <h3>SOUS-TOTAL</h3><p class="cart_total_price">{{cart.getTotalPrice}}</p>
+                    </div>
+                </div>
+                <div class="cart_price">
+                    <div class="crt_prc_hdr">
+                        <h2>TOTAL</h2>
+                    </div>
+                    <p class="cart_total_price">sous-total {{cart.getTotalPrice}}</p>
+                    <h3>Livraison</h3>
+                    <p>PAIEMENT</p>
+                    <p>NOUS ACCEPTIONS :</p>
+                </div>
             </div>
         </div>
     </div>
