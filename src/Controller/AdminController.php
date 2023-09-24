@@ -2,12 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Order;
 use App\Entity\Product;
+use App\Form\OrderType;
 use App\Entity\Category;
 use App\Form\CategoryFormType;
+use App\Form\GetBonCommandeFormType;
 use App\Form\ProductAddTypeFormType;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\OrderRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,13 +24,50 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminController extends AbstractController
 {
     #[Route('/', name: 'adminindex')]
-    public function index(ProductRepository $produitRepo, CategoryRepository $categoryRepo): Response
+    public function index(Request $request, PdfGeneratorController $pdfGenerator, UserRepository $userRepo, ProductRepository $produitRepo, CategoryRepository $categoryRepo, OrderRepository $orderRepo): Response
     {
         $category = $categoryRepo->findAll();
         $produits = $produitRepo->findBy([], null, 6);
+        $user = $userRepo->findOneBy(['email' => $this->getUser()->getUserIdentifier()]) ;
+
+        $order = new Order();
+        $form = $this->createForm(OrderType::class, $order);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $order->setUser($this->getUser());
+            $order->setOrderDate(new \DateTime());
+            $order->setDateBonCommande(new \DateTime());
+            $order->setIsPromo(true);
+            $order->setTypeTaxeLocal('15%');
+            $order->setClientName($user->getName());
+            $orderRepo->save($order, true);
+            return $this->redirectToRoute('contrat_pdf_view', ['userid' => $user->getId(), 'orderid' => $order->getId()]);
+        }
+
+        // Récupération d'un bon de commande
+        $formPdf = $this->createForm(GetBonCommandeFormType::class);
+        $formPdf->handleRequest($request);
+
+        if($formPdf->isSubmitted() && $formPdf->isValid()){
+            $data = $formPdf->getData();
+            $orderId = $data['orderId'];
+            $action = $data['action'];
+
+            if ($action === 'download') {
+                // Redirige vers la route pour télécharger le PDF
+                return $this->redirectToRoute('contrat_pdf_dl', ['userid' => $user->getId(), 'orderid' => $orderId]);
+            } elseif ($action === 'view') {
+                // Redirige vers la route pour afficher le PDF
+                return $this->redirectToRoute('contrat_pdf_view', ['userid' => $user->getId(), 'orderid' => $orderId]);
+            }
+        }
+        
         return $this->render('admin/index.html.twig', [
             'produits' => $produits,
-            'category' => $category
+            'category' => $category,
+            'form_order' => $form,
+            'form_bdc' => $formPdf
         ]);
     }
 

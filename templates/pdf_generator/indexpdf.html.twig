@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>{{ user.name }}</title>
+    </head>
+    <body>
+        <table width="100%" style="font-family: Sans-serif">
+            <tr>
+                <td style="width:50%; height: fit-content">
+                    <p>
+                        <strong>{{ order.id }}</strong><br>
+                        <a href="mailto:{{ user.email }}">{{ user.email }}</a><br>
+                        {{ order.getAdresseFact }}<br>
+                    </p>
+                    
+                    <p>
+                        <strong>{{ user.name }}</strong><br>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: center; padding: 2% 0 2% 0" colspan="2">
+                    <u><h2>Bon de commande</h2></u>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <p>
+                        M./Mme <strong>{{ user.name }}</strong>,<br>
+                        Voici le bon de commande lié au panier : <br>
+                        <ul>
+                            <li>datant du : {{ order.getOrderDate|date('d/m/Y') }}</li>
+                        </ul><br><br>
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
