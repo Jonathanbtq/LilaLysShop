@@ -18,12 +18,30 @@
                 <li class="nav_item_btn">
                     <a href="">Paterne</a>
                 </li>
-                <li class="nav_item_btn">
+                <li class="nav_item_btn cart_idx_drop">
                     {% if nbProduit.getNbProducts is defined %}
                         <a class="" href="{{path('cart')}}"><i class="fa-solid fa-cart-shopping cart_count_a">{{nbProduit.getNbProducts}}</i></a>
                     {% else %}
                         <a class="" href="{{path('cart')}}"><i class="fa-solid fa-cart-shopping cart_count_a">0</i></a>
                     {% endif %}
+                    <div class="dropdown_cart">
+                        <h3>Mon Panier</h3>
+                        {% for product in app.user.getPanierProduits %}
+                        <div class="dropdown_cart_card">
+                            <img src="/uploads/photos/{{product.getIdProduit.getId}}/{{product.getIdProduit.getProductImage}}">
+                            <div class="drp_crt_rgt">
+                                <p>{{product.getIdProduit.name}}<p>
+                                <p>{{product.getIdProduit.price}}</p>
+                                <button data-product-id="{{product.getIdProduit.getId}}" class="cart_delete_product_btn">X</button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <div class="drp_crt_bot">
+                            <p>Sous-total: {{app.user.getCart.getTotalPrice}}</p>
+                            <p>Taxe: 15%</p>
+                            <p>Total: {{app.user.getCart.getTotalPrice}}</p>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav_item_btn">
                     {% if app.user %}

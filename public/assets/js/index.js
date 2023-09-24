@@ -1,4 +1,4 @@
-const shopCards = document.querySelectorAll('.idx_shop_card');
+const shopCards = document.querySelectorAll('.card_crochet_ctn');
 
 shopCards.forEach(card => {
     const button = card.querySelector('.btn_main_shop');

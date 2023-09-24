@@ -11,6 +11,13 @@ btnDeletePrd.forEach(button => {
                 setInterval(element.remove(), 500);
             }
         })
+
+        cardPrdCheck = document.querySelectorAll('.dropdown_cart_card');
+        cardPrdCheck.forEach(element => {
+            if(element.getAttribute('data-product-id') == infoData){
+                setInterval(element.remove(), 500);
+            }
+        })
         
     })
 });

@@ -76,17 +76,6 @@
     flex-wrap: wrap;
     width: 100%;
 }
-.idx_shop_card{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #f2f2f2;
-    border-radius: 5px;
-    /* height: 15vw; */
-    padding: 10px;
-    width: 15vw;
-    position: relative;
-}
 .idx_img_main_shop{
     display: flex;
     justify-content: center;
@@ -100,37 +89,4 @@
     width: 90%;
     height: 25%;
 }
-.idx_shop_card h3{
-    padding: 0;
-    margin: 0;
-    color: rgb(163, 57, 57);
-}
-.idx_shop_card p{
-    padding: 0;
-    margin: 0;
-    font-size: 20px;
-    color: #212529;
-}
-.idx_shop_card img{
-    width: 90%;
-    height: 100%;
-}
-.idx_shop_card i{
-    display: none;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    z-index: 999;
-    width: 2vw;
-    height: 2vw;
-    background-color: rgb(226, 224, 224);
-    padding: 10px;
-    margin: 10px;
-    border-radius: 50%;
-    bottom: 0;
-    right: 0;
-}
-.idx_shop_card i:hover{
-    display: flex;
-    cursor: pointer;
-}
+/*********Les cartes d'item de vente dans main*********/
