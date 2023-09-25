@@ -54,7 +54,7 @@
                     
                     <ul class="dropdown">
                         {% if app.user %}
-                            <li><a href="{{path('account', {email: app.user.email} )}}">Compte</a></li>
+                            <li><a href="{{path('account')}}">Compte</a></li>
                             {% if app.user.roles[0] == "ROLE_ADMIN" %}
                                 <li><a href="{{path('admin_adminindex')}}">Admin</a></li>
                             {% endif %}

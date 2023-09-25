@@ -69,6 +69,9 @@ class Order
     #[ORM\Column(length: 255)]
     private ?string $client_name = null;
 
+    #[ORM\Column]
+    private ?bool $is_valid = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -286,6 +289,18 @@ class Order
     public function setClientName(string $client_name): static
     {
         $this->client_name = $client_name;
+
+        return $this;
+    }
+
+    public function isIsValid(): ?bool
+    {
+        return $this->is_valid;
+    }
+
+    public function setIsValid(bool $is_valid): static
+    {
+        $this->is_valid = $is_valid;
 
         return $this;
     }

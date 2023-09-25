@@ -8,53 +8,23 @@
         <h2>Détails</h2>
         <form action="POST" method="POST">
             {{ form_start(form) }}
-
             {{ form_row(form.name)}}
             {{ form_row(form.email)}}
             {{ form_row(form.telephone)}}
-            <div class="form_acc_mdf">
-                <label for="">Rue</label>
-                <input type="text">
-            </div>
-            
-            <div class="form_acc_mdf">
-                <label for="">Complément d'adresse</label>
-                <input type="text">
-            </div>
-
-            <div class="form_acc_mdf">
-                <label for="">Ville</label>
-                <input type="text">
-            </div>
-
-            <div class="form_acc_mdf">
-                <label for="">Code postal</label>
-                <input type="text">
-            </div>
-
+            {{ form_row(form.adresse)}}
+            <input type="text">
+            <label for="" name="city">Ville</label>
+            <ul>
+            {% if suggestions is defined and suggestions|length > 0 %}
+                <p>La ville que vous avez saisie n'a pas été trouvée. Voici quelques suggestions :</p>
+                    <ul>
+                        {% for suggestion in suggestions %}
+                            <li>{{ suggestion }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </ul>
             {{ form_end(form) }}
-            {# <div class="form_acc_lft">
-                <label>Nom</label>
-                <input type="text">
-                <label>Nom de la société</label>
-                <input type="text">
-                <label>Téléphone</label>
-                <input type="text">
-                <label>Ville</label>
-                <input type="text">
-                <label>Pays</label>
-                <input type="text">
-            </div>
-            <div class="form_acc_rgt">
-                <label>Courriel</label>
-                <input type="text">
-                <label>Rue</label>
-                <input type="text">
-                <label>Code postal</label>
-                <input type="text">
-                <input type="submit">
-            </div> #}
-            
         </form>
     </div>
 </div>
