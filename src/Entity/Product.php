@@ -52,9 +52,13 @@ class Product
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductImg::class)]
+    private Collection $productImgs;
+
     public function __construct()
     {
         $this->panierProduits = new ArrayCollection();
+        $this->productImgs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -220,6 +224,36 @@ class Product
     public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductImg>
+     */
+    public function getProductImgs(): Collection
+    {
+        return $this->productImgs;
+    }
+
+    public function addProductImg(ProductImg $productImg): static
+    {
+        if (!$this->productImgs->contains($productImg)) {
+            $this->productImgs->add($productImg);
+            $productImg->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductImg(ProductImg $productImg): static
+    {
+        if ($this->productImgs->removeElement($productImg)) {
+            // set the owning side to null (unless already changed)
+            if ($productImg->getProduct() === $this) {
+                $productImg->setProduct(null);
+            }
+        }
 
         return $this;
     }

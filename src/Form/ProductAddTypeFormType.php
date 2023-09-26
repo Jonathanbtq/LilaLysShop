@@ -52,6 +52,9 @@ class ProductAddTypeFormType extends AbstractType
                 'mapped' => false,
                 'label' => 'Image'
             ])
+            ->add('name', ProductImgFormType::class, [
+                'label' => false
+            ])
             ->add('category', EntityType::class, [
                 'label' => 'Nom',
                 'class' => Category::class,

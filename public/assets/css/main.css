@@ -23,11 +23,11 @@ a{
 .card_crochet_ctn{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
     border: 1px solid #f2f2f2;
     border-radius: 5px;
     padding: 10px;
-    width: 15vw;
+    width: 13vw;
     position: relative;
 }
 .card_crochet_ctn h3{
@@ -42,7 +42,7 @@ a{
     color: #212529;
 }
 .card_crochet_ctn img{
-    width: 90%;
+    width: 100%;
     height: 100%;
 }
 .card_crochet_ctn i{

@@ -20,7 +20,8 @@
                             <div class="idx_main_shop_desc">
                                 <h3>{{ product.name }}</h3>
                                 <p>{{ product.price }}€</p>
-                                <p>#{{product.category.getName}}</p><a href="{{path('product', {idproduit : product.id})}}">Fiche produit</a>
+                                {# <p>#{{product.category.getName}}</p> #}
+                                <a href="{{path('product', {idproduit : product.id})}}">Fiche produit</a>
                                 {% if product.isHasDiscountedPrice == 1 %}
                                     <p class="span_promo">Promo !</p>
                                 {% endif %}
