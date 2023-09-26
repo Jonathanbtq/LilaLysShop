@@ -74,6 +74,7 @@
 .idx_shop_main{
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
     width: 100%;
 }
 .idx_img_main_shop{

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProductController!{% endblock %}
+
+{% block body %}
+    {# {{dump(product)}} #}
+    <div class="prd_ctn">
+        <div class="prd_wth">
+            <div class="prd_top">
+                <div class="prd_card_img">
+                    <img src="/uploads/photos/{{product.id}}/{{product.getProductImage}}" alt="">
+                </div>
+                <div class="prd_card_desc">
+                    <h2>{{product.name}}</h2>
+                    <p>Quantité restante : {{product.getStockQuantity}}</p>
+                    <div class="prd_dtl_prc">
+                        <p>{{product.price}}</p>
+                        <!--Ajouter le prix et quantité-->
+                        <i class="fa-solid fa-cart-shopping cart_count_a" data-product-id="{{product.id}}">Acheter</i>
+                    </div>
+                    <div class="prd_fiche_technique">
+                        <h3>Détails produit</h3>
+                        <p>{{product.description}}</p>
+                        <p>{{product.getProductType}}</p>
+                        <p>{{product.category.getName}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="prd_bot">
+                <div class="prd_bot_desc">
+                
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,35 @@
+.prd_ctn a, .prd_ctn p, .prd_ctn ul, .prd_ctn li{
+    padding: 0;
+    margin: 0;
+}
+.prd_ctn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.prd_wth{
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px;
+    width: 60%;
+}
+.prd_top{
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+.prd_card_img{
+    display: flex;
+    justify-content: center;
+    width: 80%;
+}
+.prd_card_img img{
+    width: 60%;
+}
+.prd_dtl_prc{
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    margin: 10px 0 10px 0;
+}
