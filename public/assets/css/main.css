@@ -6,6 +6,9 @@ html, body{
 a{
     text-decoration: none;
 }
+:root{
+    --gray-border: #d6d6d6;
+}
 .span_promo{
     display: flex;
     justify-content: center;

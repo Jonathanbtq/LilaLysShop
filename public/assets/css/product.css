@@ -18,18 +18,92 @@
     display: flex;
     flex-wrap: nowrap;
     width: 100%;
+    margin-top: 20px;
+    /* max-height: 20vw; */
 }
 .prd_card_img{
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    width: 80%;
+    align-items: center;
+    border-bottom: 1px solid var(--gray-border);
+    padding-bottom: 10px;
+    width: 68%;
 }
 .prd_card_img img{
-    width: 60%;
+    max-height: 20vw;
+    max-width: 20vw;
+}
+.prd_img_slide{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 100%;
+}
+.prd_img_slide img{
+    width: 3.5vw;
+    margin: 10px 10px 0 0;
+    cursor: pointer;
 }
 .prd_dtl_prc{
     display: flex;
     flex-wrap: nowrap;
     width: 100%;
     margin: 10px 0 10px 0;
+}
+.prd_dtl_prc p{
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.prd_dtl_prc i{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: red;
+    border-radius: 5px;
+    width: 8vw;
+    height: 3vw;
+    cursor: pointer;
+}
+.prd_card_desc{
+    display: flex;
+    flex-direction: column;
+    width: 32%;
+}
+.prd_card_desc h2{
+    font-size: 35px;
+    margin: 0;
+}
+.prd_card_desc p{
+    font-size: 20px;
+}
+.prd_fiche_technique{
+    margin-top: 50px;
+}
+.prd_fiche_technique p{
+    margin-top: 20px;
+}
+.prd_reseaux{
+    display: flex;
+    width: 100%;
+    justify-content: end;
+}
+.prd_res_wth{
+    display: flex;
+    flex-wrap: nowrap;
+    width: 50%;
+}
+.prd_res_wth a{
+    margin-left: 10px;
+}
+.prd_res_wth a:nth-child(1){
+    color: #3B5999;
+}
+.prd_res_wth a:nth-child(2){
+    color: #55ACEE;
+}
+.prd_res_wth a:nth-child(3){
+    color: #276e72;
 }
