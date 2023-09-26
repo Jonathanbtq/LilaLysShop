@@ -34,9 +34,9 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $cityName = $form['city']->getData();
+            $cityName = $_POST['city'];
             $suggestions = [];
-            $city = $cityRepo->findOneBy(['nom' => $cityName]);
+            $city = $cityRepo->findOneBy(['label' => $cityName]);
             if (!$city) {
                 $cities = $cityRepo->findAll();
         
@@ -53,7 +53,7 @@ class UserController extends AbstractController
             $adresse->setCity($city);
             $addrRepo->save($adresse, true);
 
-            if($cityName = $form['email']->getData() == $user->getEmail()){
+            if($form['email']->getData() == $user->getEmail()){
                 $user->setEmail($user->getEmail());
             }
             $user->setAdresse($adresse->getId());
@@ -74,6 +74,23 @@ class UserController extends AbstractController
         $order = $orderRepo->findBy(['user' => $user]);
 
         return $this->render('user/boncommande.html.twig', [
+            'user' => $user,
+            'order' => $order
+        ]);
+    }
+
+    #[Route('/facture/{email}', name: 'facture')]
+    public function FactureCreate($email, UserRepository $userRepo, OrderRepository $orderRepo): Response
+    {
+        $user = $userRepo->findOneBy(['email' => $email]);
+        $order = $orderRepo->findBy(['user' => $user]);
+
+        foreach($order as $order){
+            if($order->isIsValid()){
+                $order = $order;
+            }
+        }
+        return $this->render('user/facture.html.twig', [
             'user' => $user,
             'order' => $order
         ]);

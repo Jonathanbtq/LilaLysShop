@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Account{% endblock %}
+
+{% block body %}
+<div class="prf_ctn">
+    <div class="prf_wth">
+        <p>Welcome {{user.email}}</p>
+        <div class="prf_middle_dct_bdc">
+            <div class="prf_document_bdc">
+                <h2>Facture</h2>
+                    <div class="prf_document_acc">
+                        <ul class="prf_entete_bdc">
+                            <li>Numéro de commande</li>
+                            <li>Date de commande</li>
+                            <li>Télécharger</li>
+                            <li>Voir</li>
+                        </ul>
+                        <ul>
+                        {% for order in order %}
+                            <div class="prf_bdc_acc">
+                                <li>{{order.id}}</li>
+                                <li>{{order.getOrderDate|date('d/m/Y')}}</li>
+                                <a href="{{path('contrat_pdf_dl', {userid:  user.id, orderid: order.id})}}">Download</a>
+                                <a href="{{path('contrat_pdf_view', {userid:  user.id, orderid: order.id})}}">View</a>
+                            </div>
+
+                        {% endfor %}
+                        </ul>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<i class="fa fa-enveloppe fa-fw" role="img" aria-label="Courriel"></i>
+{% endblock %}

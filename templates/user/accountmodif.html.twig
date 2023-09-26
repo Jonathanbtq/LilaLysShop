@@ -12,7 +12,7 @@
             {{ form_row(form.email)}}
             {{ form_row(form.telephone)}}
             {{ form_row(form.adresse)}}
-            <input type="text">
+            <input type="text" name="city">
             <label for="" name="city">Ville</label>
             <ul>
             {% if suggestions is defined and suggestions|length > 0 %}

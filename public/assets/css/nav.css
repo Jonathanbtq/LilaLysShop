@@ -111,6 +111,15 @@
 div .cart_idx_drop:hover .dropdown_cart{
     display: block;
 }
+.a_see_panier{
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px !important;
+    border-top: 1px solid rgba(78, 78, 78, 0.315) !important;
+    margin: 10px 0 0 0 !important;
+    width: 90% !important;
+    background-color: rgb(98, 133, 98) !important;
+}
 .dropdown_cart p{
     font-weight: lighter;
     color: black;
