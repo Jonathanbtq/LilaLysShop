@@ -90,4 +90,10 @@
     width: 90%;
     height: 25%;
 }
+.idx_main_shop_desc .span_promo{
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 /*********Les cartes d'item de vente dans main*********/

@@ -28,7 +28,7 @@
                         <h3>Mon Panier</h3>
                         {% for product in app.user.getPanierProduits %}
                         <div class="dropdown_cart_card">
-                            <img src="/uploads/photos/{{product.getIdProduit.getId}}/{{product.getIdProduit.getProductImage}}">
+                            <img src="/uploads/photos/{{product.getIdProduit.getId}}/mini/{{product.getIdProduit.getProductImage}}">
                             <div class="drp_crt_rgt">
                                 <p>{{product.getIdProduit.name}}<p>
                                 <p>{{product.getIdProduit.price}}</p>

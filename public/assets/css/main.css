@@ -14,9 +14,9 @@ a{
     justify-content: center;
     align-items: center;
     width: 5vw;
-    background-color: red;
+    background-color: rgb(163, 57, 57);
     border-radius: 50px;
-    color: white;
+    color: white !important;
     font-weight: bold;
 }
 
@@ -24,6 +24,7 @@ a{
     display: flex;
     flex-direction: column;
     /* align-items: center; */
+    position: relative;
     border: 1px solid #f2f2f2;
     border-radius: 5px;
     padding: 10px;
