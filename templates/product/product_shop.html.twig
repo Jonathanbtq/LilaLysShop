@@ -9,11 +9,11 @@
             <p>Doudou > {{product.name}}{{product.description}}</p>
             <div class="prd_top">
                 <div class="prd_card_img">
-                    <img src="/uploads/photos/{{product.id}}/{{product.getProductImage}}" alt="">
+                    <img src="/uploads/photos/{{product.id}}/mini/{{product.getProductImage}}" alt="">
                     <div class="prd_img_slide">
-                        <img src="/uploads/photos/{{product.id}}/{{product.getProductImage}}" alt="">
-                        <img src="/uploads/photos/{{product.id}}/{{product.getProductImage}}" alt="">
-                        <img src="/uploads/photos/{{product.id}}/{{product.getProductImage}}" alt="">
+                        {% for img in product.getProductImgs %}
+                            <img src="/uploads/photos/{{product.id}}/{{img.getPrdname}}" alt="">
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="prd_card_desc">

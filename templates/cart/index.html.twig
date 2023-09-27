@@ -14,7 +14,7 @@
                     {% for product in products %}
                     <div class="cart_prd_check" data-product-id="{{product.getIdProduit.getId}}">
                         <div class="crt_check_img">
-                            <img src="/uploads/photos/{{product.getIdProduit.getId}}/{{product.getIdProduit.getProductImage}}" alt="">
+                            <img src="/uploads/photos/{{product.getIdProduit.getId}}/mini/{{product.getIdProduit.getProductImage}}" alt="">
                         </div>
                         <div class="crt_check_details">
                             <p>{{product.getIdProduit.getName}}</p>

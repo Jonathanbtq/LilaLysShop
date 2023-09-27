@@ -6,12 +6,14 @@ use App\Entity\Order;
 use App\Entity\Product;
 use App\Form\OrderType;
 use App\Entity\Category;
+use App\Entity\ProductImg;
 use App\Form\CategoryFormType;
 use App\Form\GetBonCommandeFormType;
 use App\Form\ProductAddTypeFormType;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\OrderRepository;
+use App\Repository\ProductImgRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +29,7 @@ class AdminController extends AbstractController
     public function index(Request $request, PdfGeneratorController $pdfGenerator, UserRepository $userRepo, ProductRepository $produitRepo, CategoryRepository $categoryRepo, OrderRepository $orderRepo): Response
     {
         $category = $categoryRepo->findAll();
-        $produits = $produitRepo->findBy([], null, 6);
+        $produits = $produitRepo->findBy([], null, 10);
         $user = $userRepo->findOneBy(['email' => $this->getUser()->getUserIdentifier()]) ;
 
         $order = new Order();
@@ -72,41 +74,29 @@ class AdminController extends AbstractController
     }
 
     #[Route('/newproduct', name: 'adminnewproduct')]
-    public function newProduct(EntityManagerInterface $entityManager, ProductRepository $produitRepo, #[Autowire('%product_photo_dir%')] string $photoDir, Request $request): Response
+    public function newProduct(EntityManagerInterface $entityManager, ProductImgRepository $productImgRepo, ProductRepository $produitRepo, #[Autowire('%product_photo_dir%')] string $photoDir, Request $request): Response
     {
         $newProduit = New Product();
         $form = $this->createForm(ProductAddTypeFormType::class, $newProduit);
         $form->handleRequest($request);
         
-        if($newProduit->getProductImage() != null){
-            $directory = $photoDir.'/'.$newProduit->getId();
-        }
-
+        $directory = $photoDir.'/'.$newProduit->getId();
         if ($form->isSubmitted() && $form->isValid()) {
             $produitRepo->save($newProduit, true);
-            if($img = $form['product_image']->getData()){
-                $filename = bin2hex(random_bytes(6)) . '.' . $img->guessExtension();
-                // Vérification de l'éxistance d'un fichier nommé à l'id de l'user
-                if(!file_exists($photoDir.'/'.$newProduit->getId())){
-                    $photoDir = $photoDir.'/'.$newProduit->getId();
-                    mkdir($photoDir, 0777);
-                }else{
-                    $objects = scandir($photoDir.'/'.$newProduit->getId());
-                    foreach ($objects as $object) {
-                        if ($object != "." && $object != "..") {
-                            if (filetype($directory."/".$object) == "dir"){
-                                rmdir($directory."/".$object); 
-                            }else{
-                                unlink($directory."/".$object);
-                            }
-                        }
-                    }
-                    rmdir(strval($photoDir.'/'.$newProduit->getId()));
-                    $photoDir = $photoDir.'/'.$newProduit->getId();
-                    mkdir($photoDir, 0777);
-                }
-                $img->move($photoDir, $filename);
+
+            $img = $form['product_image']->getData();
+            if($img){
+                $filename = $this->createFolderImg($photoDir, $img, $newProduit);
                 $newProduit->setProductImage($filename);
+            }
+            if($multipleImg = $form['productImgs']->getData()){
+                $filenames = $this->createFolderImgs($photoDir, $multipleImg, $newProduit);
+                foreach($filenames as $filename){
+                    $prdImg = new ProductImg();
+                    $prdImg->setPrdName($filename);
+                    $prdImg->setProduct($newProduit);
+                    $productImgRepo->save($prdImg, true);
+                }
             }
             $produitRepo->save($newProduit, true);
             return $this->redirectToRoute('admin_adminindex');
@@ -130,5 +120,49 @@ class AdminController extends AbstractController
         return $this->render('admin/addcategory.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    public function createFolderImg($photoDir, $img, $newProduit){
+        $cheminDossierProduit = $photoDir . '/' . $newProduit->getId();
+        $cheminDossierMini = $cheminDossierProduit . '/mini';
+
+        $filename = bin2hex(random_bytes(6)) . '.' . $img->guessExtension();
+        if (!is_dir($cheminDossierMini)) {
+            mkdir($cheminDossierMini, 0777, true);
+            $img->move($cheminDossierMini, $filename);
+        }else{
+            $objects = scandir($cheminDossierMini);
+            foreach ($objects as $object) {
+                if ($object != "." && $object != "..") {
+                    $cheminFichier = $cheminDossierMini . '/' . $object;
+                    if (is_file($cheminFichier)) {
+                        unlink($cheminFichier); // Supprime les fichiers dans le dossier 'mini'
+                    }
+                }
+            }
+            rmdir(strval($cheminDossierMini));
+            $photoDir = $cheminDossierMini;
+            mkdir($photoDir, 0777, true);
+            $img->move($photoDir, $filename);
+        }
+        return $filename;
+    }
+
+    public function createFolderImgs($photoDir, $img, $newProduit){
+        $cheminDossierProduit = $photoDir . '/' . $newProduit->getId();
+        $filenames = [];
+
+        foreach($img as $imgs){
+            $filename = bin2hex(random_bytes(6)) . '.' . $imgs->guessExtension();
+            if(!file_exists($cheminDossierProduit)){
+                $photoDir = $cheminDossierProduit;
+                mkdir($photoDir, 0777, true);
+                $imgs->move($cheminDossierProduit, $filename);
+            }else{
+                $imgs->move($cheminDossierProduit, $filename);
+            }
+            $filenames[] = $filename;
+        }
+        return $filenames;
     }
 }

@@ -14,9 +14,11 @@ class ProductImgFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', FileType::class, [
+            ->add('prdname', FileType::class, [
+                'multiple' => true,
                 'mapped' => false,
-                'label' => 'Images du produit'
+                'label' => 'Images du produit',
+                'data_class' => ProductImg::class
             ])
         ;
     }

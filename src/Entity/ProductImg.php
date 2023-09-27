@@ -14,7 +14,7 @@ class ProductImg
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private ?string $prdname = null;
 
     #[ORM\ManyToOne(inversedBy: 'productImgs')]
     private ?Product $product = null;
@@ -24,14 +24,14 @@ class ProductImg
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getPrdname(): ?string
     {
-        return $this->name;
+        return $this->prdname;
     }
 
-    public function setName(string $name): static
+    public function setPrdName(string $prdname): static
     {
-        $this->name = $name;
+        $this->prdname = $prdname;
 
         return $this;
     }
