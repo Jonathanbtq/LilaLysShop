@@ -37,6 +37,7 @@ class CartController extends AbstractController
         $formCode = $this->createForm(CodePromoFormFindType::class);
         $formCode->handleRequest($request);
         $reductionPromo = ['value' => '', 'data' => ''];
+        $previousTotal = $cart->getTotalPrice();
 
         if($formCode->isSubmitted() && $formCode->isValid()){
             $PromoCode = $codePromoRepo->findOneBy(['code' => $formCode->get('code')->getData()]);

@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProductController!{% endblock %}
+{% block title %}Product Shop{% endblock %}
 
 {% block body %}
     {# {{dump(product)}} #}
     <div class="prd_ctn">
         <div class="prd_wth">
+            <h2>Produit en vente :</h2>
             <div class="idx_shop_main">
                 {% for product in products %}
                     <div class="card_crochet_ctn idx_shop_card">
