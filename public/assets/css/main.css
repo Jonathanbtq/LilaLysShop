@@ -8,6 +8,7 @@ a{
 }
 :root{
     --gray-border: #d6d6d6;
+    --red-txt: #a33939;
 }
 .d-none{
     display: none;
@@ -26,28 +27,32 @@ a{
 .card_crochet_ctn{
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
     position: relative;
     border: 1px solid #f2f2f2;
     border-radius: 5px;
     padding: 10px;
+    margin-bottom: 10px;
     width: 13vw;
     position: relative;
+    background-color: #fff; /* Fond blanc */
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); */
 }
 .card_crochet_ctn h3{
     padding: 0;
     margin: 0;
-    color: rgb(163, 57, 57);
+    font-size: 1.2rem;
+    color: var(--red-txt);
 }
 .card_crochet_ctn p{
     padding: 0;
     margin: 0;
-    font-size: 20px;
+    font-size: 1rem;
     color: #212529;
 }
 .card_crochet_ctn img{
-    width: 100%;
-    height: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
 }
 .card_crochet_ctn i{
     display: none;
@@ -55,16 +60,38 @@ a{
     align-items: center;
     position: absolute;
     z-index: 999;
-    width: 2vw;
-    height: 2vw;
+    width: 3vw;
+    height: 3vw;
     background-color: rgb(226, 224, 224);
-    padding: 10px;
-    margin: 10px;
+    font-size: 1.2rem; /* Taille de l'icône */
+    color: #a33939;
     border-radius: 50%;
-    bottom: 0;
-    right: 0;
+    bottom: 10px;
+    right: 10px;
+    transition: background-color 0.3s ease-in-out;
 }
-.card_crochet_ctn i:hover{
+.card_crochet_ctn i:hover {
     display: flex;
     cursor: pointer;
+    color: #fff;
+}
+
+/* Style pour l'image clonée (initiallement cachée) */
+#image-clone {
+    display: none;
+    position: fixed;
+    width: 50px; /* Largeur initiale de l'image clonée */
+    height: 50px; /* Hauteur initiale de l'image clonée */
+    background-color: transparent;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    transition: transform 0.5s ease-in-out, width 0.5s ease-in-out, height 0.5s ease-in-out;
+}
+
+/* Animation lorsque l'image est en cours de déplacement vers le panier */
+#image-clone.animating {
+    transform: translate(-50%, -50%) scale(3); /* Grossissement de l'image */
 }

@@ -1,0 +1,53 @@
+/* Style général du formulaire */
+form {
+    max-width: 400px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Style des étiquettes */
+label {
+    font-weight: bold;
+}
+
+/* Style des champs de texte */
+input[type="text"],
+input[type="checkbox"],
+textarea {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Style du bouton de soumission */
+input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Style du bouton de soumission au survol */
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Style pour les messages d'erreur */
+.error-message {
+    color: #ff0000;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Style pour les messages de succès */
+.success-message {
+    color: #008000;
+    font-size: 14px;
+    margin-top: 5px;
+}
