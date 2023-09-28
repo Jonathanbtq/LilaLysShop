@@ -30,6 +30,31 @@
     padding-bottom: 10px;
     width: 68%;
 }
+.prd_card_img_arrow{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%
+}
+.prd_card_arrow{
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    width: 60%;
+}
+.prd_card_arrow i{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2vw;
+    height: 2vw;
+    border-radius: 50%;
+    background-color: var(--gray-border);
+}
+.prd_card_arrow i:hover{
+    cursor: pointer;
+}
 .prd_card_img img{
     max-height: 20vw;
     max-width: 20vw;
@@ -44,6 +69,10 @@
     width: 3.5vw;
     margin: 10px 10px 0 0;
     cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+.prd_img_slide img:hover{
+    transform: scale(1.2);
 }
 .prd_dtl_prc{
     display: flex;

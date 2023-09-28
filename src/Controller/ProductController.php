@@ -29,4 +29,24 @@ class ProductController extends AbstractController
             'products' => $products
         ]);
     }
+
+    #[Route('shop/pattern', name: 'pattern')]
+    public function showPattern(ProductRepository $produitRepo): Response
+    {
+        $products = $produitRepo->findBy(['product_type' => 'Pattern']);
+
+        return $this->render('product/pattern.html.twig', [
+            'products' => $products
+        ]);
+    }
+
+    #[Route('shop/freestuff', name: 'freestuff')]
+    public function showFreeStuff(ProductRepository $produitRepo): Response
+    {
+        $products = $produitRepo->findBy(['product_type' => 'FreeStuff']);
+
+        return $this->render('product/freestuff.html.twig', [
+            'products' => $products
+        ]);
+    }
 }

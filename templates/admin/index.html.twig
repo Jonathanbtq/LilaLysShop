@@ -23,6 +23,7 @@
                         <p>{{ produit.name }}</p>
                         <p>{{ produit.price }}$</p>
                         <p>#{{produit.category.getName}}</p>
+                        <a href="{{path('admin_modif_product', {idProduct : produit.id})}}">Modifier</a>
                         {# {{ produit.stock_quantity }} #}
                     </div>
                 {% endfor %}

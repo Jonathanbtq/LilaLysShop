@@ -120,6 +120,36 @@ class AdminController extends AbstractController
         ]);
     }
 
+    #[Route('/modifproduct/{idProduct}', name: 'modif_product')]
+    public function ModifProduct($idProduct, ProductImgRepository $productImgRepo, ProductRepository $produitRepo, #[Autowire('%product_photo_dir%')] string $photoDir, Request $request): Response
+    {
+        $product = $produitRepo->findOneBy(['id' => $idProduct]);
+        $form = $this->createForm(ProductAddTypeFormType::class, $product);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $img = $form['product_image']->getData();
+            if($img){
+                $filename = $this->createFolderImg($photoDir, $img, $product);
+                $product->setProductImage($filename);
+            }
+            if($multipleImg = $form['productImgs']->getData()){
+                $filenames = $this->createFolderImgs($photoDir, $multipleImg, $product);
+                foreach($filenames as $filename){
+                    $prdImg = new ProductImg();
+                    $prdImg->setPrdName($filename);
+                    $prdImg->setProduct($product);
+                    $productImgRepo->save($prdImg, true);
+                }
+            }
+           $produitRepo->save($product, true);
+           return $this->redirectToRoute('admin_adminindex');
+        }
+        return $this->render('admin/newproduct.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
     #[Route('/newcategory', name: 'newcategory')]
     public function newCategory(CategoryRepository $categoryRepo, Request $request): Response
     {
