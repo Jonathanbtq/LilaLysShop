@@ -1,17 +1,12 @@
-Bons de commande
-Factures
 Services après vente
 
 Détails -> modifier
-Pseudo
-Email
 
 Sécurité du compte
 Modifier les paramètres de sécurité
 
 Panier
 Ligne de suivi étape de la commande
-le Panier
 article -> quantité (bouton + - ) -> Prix (bouton corbeille)
 un bouton "continuer achats"
 A droite un recap (Total) avec sous-total et taxes et "j'ai un code promo"

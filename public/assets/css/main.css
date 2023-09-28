@@ -9,6 +9,9 @@ a{
 :root{
     --gray-border: #d6d6d6;
 }
+.d-none{
+    display: none;
+}
 .span_promo{
     display: flex;
     justify-content: center;

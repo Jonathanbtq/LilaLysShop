@@ -3,21 +3,27 @@
 namespace App\Controller;
 
 use App\Entity\Cart;
-use App\Entity\PanierProduit;
 use App\Entity\User;
+use App\Entity\CodePromo;
+use App\Entity\PanierProduit;
+use App\Form\CodePromoFormType;
 use App\Repository\CartRepository;
-use App\Repository\PanierProduitRepository;
-use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Form\CodePromoFormFindType;
+use App\Repository\ProductRepository;
+use App\Repository\CodePromoRepository;
+use App\Repository\PanierProduitRepository;
+use DateTime;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CartController extends AbstractController
 {
     #[Route('/cart', name: 'cart')]
-    public function index(CartRepository $cartRepo): Response
+    public function index(CartRepository $cartRepo, Request $request, CodePromoRepository $codePromoRepo): Response
     {
         $cart = $cartRepo->findOneBy(['user' => $this->getUser()]);
         $products = $cart->getPanierProduits();
@@ -25,9 +31,35 @@ class CartController extends AbstractController
         foreach($products as $prd){
             $prdArray[] = $prd;
         }
+
+        // Code promo formulaire
+
+        $formCode = $this->createForm(CodePromoFormFindType::class);
+        $formCode->handleRequest($request);
+        $reductionPromo = ['value' => '', 'data' => ''];
+
+        if($formCode->isSubmitted() && $formCode->isValid()){
+            $PromoCode = $codePromoRepo->findOneBy(['code' => $formCode->get('code')->getData()]);
+            
+            if($PromoCode && new \DateTime() < $PromoCode->getExpirationDate() ){
+                $reductionPromo = ['value' => $PromoCode->getPourcentageReduction(),
+                'data' => 'int'
+                ];
+                $previousTotal = $cart->getTotalPrice();
+                $cart->setTotalPrice($cart->getTotalPrice() - $PromoCode->getPourcentageReduction());
+            }else{
+                $reductionPromo = ['value' => 'Vous n\'avez pas de code promo valide',
+                'data' => 'txt'
+            ];
+            }
+        }
+        
         return $this->render('cart/index.html.twig', [
             'cart' =>  $cart,
-            'products' => $prdArray
+            'previousTotal' => $previousTotal,
+            'products' => $prdArray,
+            'recution_promo' => $reductionPromo,
+            'formcode' => $formCode
         ]);
     }
 

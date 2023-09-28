@@ -6,12 +6,15 @@ use App\Entity\Order;
 use App\Entity\Product;
 use App\Form\OrderType;
 use App\Entity\Category;
+use App\Entity\CodePromo;
 use App\Entity\ProductImg;
 use App\Form\CategoryFormType;
+use App\Form\CodePromoFormType;
 use App\Form\GetBonCommandeFormType;
 use App\Form\ProductAddTypeFormType;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\CodePromoRepository;
 use App\Repository\OrderRepository;
 use App\Repository\ProductImgRepository;
 use App\Repository\UserRepository;
@@ -26,7 +29,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminController extends AbstractController
 {
     #[Route('/', name: 'adminindex')]
-    public function index(Request $request, PdfGeneratorController $pdfGenerator, UserRepository $userRepo, ProductRepository $produitRepo, CategoryRepository $categoryRepo, OrderRepository $orderRepo): Response
+    public function index(Request $request, PdfGeneratorController $pdfGenerator, UserRepository $userRepo, ProductRepository $produitRepo, CategoryRepository $categoryRepo, OrderRepository $orderRepo, CodePromoRepository $codePromoRepo): Response
     {
         $category = $categoryRepo->findAll();
         $produits = $produitRepo->findBy([], null, 10);
@@ -64,12 +67,23 @@ class AdminController extends AbstractController
                 return $this->redirectToRoute('contrat_pdf_view', ['userid' => $user->getId(), 'orderid' => $orderId]);
             }
         }
+
+        // Code promo formulaire
+
+        $PromoCode = new CodePromo();
+        $formCode = $this->createForm(CodePromoFormType::class, $PromoCode);
+        $formCode->handleRequest($request);
+
+        if($formCode->isSubmitted() && $formCode->isValid()){
+            $codePromoRepo->save($PromoCode, true);
+        }
         
         return $this->render('admin/index.html.twig', [
             'produits' => $produits,
             'category' => $category,
             'form_order' => $form,
-            'form_bdc' => $formPdf
+            'form_bdc' => $formPdf,
+            'form_promo' => $formCode
         ]);
     }
 

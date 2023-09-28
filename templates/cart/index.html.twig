@@ -28,14 +28,31 @@
                         <h3>SOUS-TOTAL</h3><p class="cart_total_price">{{cart.getTotalPrice}}</p>
                     </div>
                 </div>
-                <div class="cart_price">
-                    <div class="crt_prc_hdr">
-                        <h2>TOTAL</h2>
+                <div class="cart_rgt_ctn">
+                    <div class="cart_price">
+                        <div class="crt_prc_hdr">
+                            <h2>TOTAL</h2>
+                        </div>
+                        <p>Total Before Reduction : {{previousTotal}}</p>
+                        <p class="cart_total_price">sous-total {{cart.getTotalPrice}}</p>
+                        <h3>Livraison</h3>
+                        
                     </div>
-                    <p class="cart_total_price">sous-total {{cart.getTotalPrice}}</p>
-                    <h3>Livraison</h3>
-                    <p>PAIEMENT</p>
-                    <p>NOUS ACCEPTIONS :</p>
+                    <div class="crt_code_promo">
+                        <h2>Code Promo :</h2>
+                        {{form_start(formcode)}}
+                        {{form_row(formcode.code)}}
+                        {{form_end(formcode)}}
+                        {% if recution_promo.data == 'int' %}
+                            <p>Vous avez le droit à <strong>{{recution_promo['value']}} %</strong> de réduction sur votre panier</p>
+                        {% elseif recution_promo.data == 'txt' %}
+                            {{recution_promo['value']}}
+                        {% endif %}
+                    </div>
+                    <div class="crt_paiement_wdt">
+                        <p>PAIEMENT</p>
+                        <p>NOUS ACCEPTIONS :</p>
+                    </div>
                 </div>
             </div>
         </div>
