@@ -29,30 +29,34 @@
                     {% endif %}
                     <div class="dropdown_cart">
                         <h3>Mon Panier</h3>
-                        {% if app.user.getPanierProduits is defined %}
-                        {% for product in app.user.getPanierProduits %}
-                        <div class="dropdown_cart_card">
-                            <img src="/uploads/photos/{{product.getIdProduit.getId}}/mini/{{product.getIdProduit.getProductImage}}">
-                            <div class="drp_crt_rgt">
-                                <p>{{product.getIdProduit.name}}<p>
-                                <p>{{product.getIdProduit.price}}</p>
-                                <button data-product-id="{{product.getIdProduit.getId}}" class="cart_delete_product_btn">X</button>
+                        {% if app.user is defined and app.user.getPanierProduits is defined and app.user.getPanierProduits|length > 0 %}
+                            {% for product in app.user.getPanierProduits %}
+                            <div class="dropdown_cart_card">
+                                <img src="/uploads/photos/{{product.getIdProduit.getId}}/mini/{{product.getIdProduit.getProductImage}}">
+                                <div class="drp_crt_rgt">
+                                    <p>{{product.getIdProduit.name}}<p>
+                                    <p>{{product.getIdProduit.price}}</p>
+                                    <button data-product-id="{{product.getIdProduit.getId}}" class="cart_delete_product_btn">X</button>
+                                </div>
                             </div>
-                        </div>
-                        {% endfor %}
+                            {% endfor %}
+                            <div class="drp_crt_bot">
+                                <p>Sous-total: {{app.user.getCart.getTotalPrice}}</p>
+                                <p>Taxe: 15%</p>
+                                <p>Total: {{app.user.getCart.getTotalPrice}}</p>
+                                <a class="a_see_panier" href="{{path('cart')}}">Voir mon panier</a>
+                            </div>
+                        {% else %}
+                            <p>Vous n'avez pas de produits dans le panier</p>
                         {% endif %}
-                        <div class="drp_crt_bot">
-                            <p>Sous-total: {{app.user.getCart.getTotalPrice}}</p>
-                            <p>Taxe: 15%</p>
-                            <p>Total: {{app.user.getCart.getTotalPrice}}</p>
-                            <a class="a_see_panier" href="{{path('cart')}}">Voir mon panier</a>
-                        </div>
                     </div>
                 </li>
                 <li class="nav_item_btn">
                     {% if app.user %}
                         {% if app.user.name != null %}
                             <a class="idx_acc_a" href="{{ path('login')}}">{{app.user.name}} v</a>
+                        {% else %}
+                            <a class="idx_acc_a" href="{{ path('login')}}">Compte v</a>
                         {% endif %}
                     {% else %}
                         <a href="{{ path('login')}}"><img src="{{asset('assets/images/index/user.png')}}" alt=""></a>
