@@ -13,6 +13,7 @@
 *.env.local
 *.env.staging
 .add.txt
+/secret/
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
