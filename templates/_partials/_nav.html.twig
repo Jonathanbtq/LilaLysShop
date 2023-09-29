@@ -29,6 +29,7 @@
                     {% endif %}
                     <div class="dropdown_cart">
                         <h3>Mon Panier</h3>
+                        {% if app.user.getPanierProduits is defined %}
                         {% for product in app.user.getPanierProduits %}
                         <div class="dropdown_cart_card">
                             <img src="/uploads/photos/{{product.getIdProduit.getId}}/mini/{{product.getIdProduit.getProductImage}}">
@@ -39,6 +40,7 @@
                             </div>
                         </div>
                         {% endfor %}
+                        {% endif %}
                         <div class="drp_crt_bot">
                             <p>Sous-total: {{app.user.getCart.getTotalPrice}}</p>
                             <p>Taxe: 15%</p>
