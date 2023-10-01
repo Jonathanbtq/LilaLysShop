@@ -41,6 +41,8 @@ class CartController extends AbstractController
 
         if($formCode->isSubmitted() && $formCode->isValid()){
             $PromoCode = $codePromoRepo->findOneBy(['code' => $formCode->get('code')->getData()]);
+            $cart->setCodepromo($PromoCode);
+            $cartRepo->save($cart, true);
             
             if($PromoCode && new \DateTime() < $PromoCode->getExpirationDate() ){
                 $reductionPromo = ['value' => $PromoCode->getPourcentageReduction(),

@@ -31,6 +31,9 @@ class Cart
     #[ORM\OneToMany(mappedBy: 'cart', targetEntity: PanierProduit::class)]
     private Collection $panierProduits;
 
+    #[ORM\ManyToOne(inversedBy: 'carts')]
+    private ?CodePromo $codepromo = null;
+
     public function __construct()
     {
         $this->panierProduits = new ArrayCollection();
@@ -115,6 +118,18 @@ class Cart
                 $panierProduit->setCart(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCodepromo(): ?CodePromo
+    {
+        return $this->codepromo;
+    }
+
+    public function setCodepromo(?CodePromo $codepromo): static
+    {
+        $this->codepromo = $codepromo;
 
         return $this;
     }

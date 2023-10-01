@@ -9,21 +9,27 @@
         <form action="POST" method="POST">
             {{ form_start(form) }}
             {{ form_row(form.name)}}
-            {{ form_row(form.email)}}
+            <div class="form_prd_email">
+                <label for="" name="city">Email</label>
+                <input type="text" name="email" value="{{user.email}}">
+            </div>
             {{ form_row(form.telephone)}}
             {{ form_row(form.adresse)}}
-            <input type="text" name="city">
-            <label for="" name="city">Ville</label>
-            <ul>
-            {% if suggestions is defined and suggestions|length > 0 %}
-                <p>La ville que vous avez saisie n'a pas été trouvée. Voici quelques suggestions :</p>
-                    <ul>
-                        {% for suggestion in suggestions %}
-                            <li>{{ suggestion }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </ul>
+            <div class="form_prd_city">
+                <label for="" name="city">Ville</label>
+                <input type="text" name="city" value="{{user.adresse.getCity.getLabel}}">
+                <ul>
+                {% if suggestions is defined and suggestions|length > 0 %}
+                    <p>La ville que vous avez saisie n'a pas été trouvée. Voici quelques suggestions :</p>
+                        <ul>
+                            {% for suggestion in suggestions %}
+                                <li>{{ suggestion }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </ul>
+            </div>
+            
             {{ form_end(form) }}
         </form>
     </div>

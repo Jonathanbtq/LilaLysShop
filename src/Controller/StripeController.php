@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\CartRepository;
+use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
@@ -14,24 +15,37 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class StripeController extends AbstractController
 {
     #[Route('/checkout/{cart}', name: 'stripe_checkout')]
-    public function checkout($cart, $stripeSK, CartRepository $cartRepo): Response
+    public function checkout($cart, $stripeSK, CartRepository $cartRepo, ProductRepository $productRepo): Response
     {
         $cart = $cartRepo->findOneBy(['id' => $cart]);
+
+        if($cart->getCodepromo() != null){
+            $reduction = $cart->getCodepromo()->getPourcentageReduction();
+        }
+        foreach($cart->getPanierProduits() as $panier){
+            $product = $panier->getIdProduit();
+            $prd = $productRepo->findOneBy(['id' => $product]);
+
+            $redPrice = ($prd->getPrice()*$reduction) / 100;
+            $price = $prd->getPrice() - $redPrice;
+            $lineItems[] = [
+                'price_data' => [
+                    'currency' => 'eur',
+                    'product_data' => [
+                        'name' => $prd->getName(),
+                    ],
+                    'unit_amount' => $price * 100,
+                ],
+                'quantity' => 1, // Vous pouvez ajuster la quantité en fonction de votre modèle de données
+            ];
+        }
+
         Stripe::setApiKey($stripeSK);
 
         try {
             $checkoutSession = Session::create([
                 'payment_method_types' => ['card'],
-                'line_items' => [[
-                    'price_data' => [
-                        'currency' => 'eur',
-                        'product_data' => [
-                            'name' => 'Crochet Moyen',
-                        ],
-                        'unit_amount' => 2000,
-                    ],
-                    'quantity' => 1,
-                ]],
+                'line_items' => $lineItems,
                 'mode' => 'payment',
                 'success_url' => $this->generateUrl('success_url', [], UrlGeneratorInterface::ABSOLUTE_URL),
                 'cancel_url' => $this->generateUrl('cancel_url', [], UrlGeneratorInterface::ABSOLUTE_URL),
@@ -47,9 +61,8 @@ class StripeController extends AbstractController
     }
 
     #[Route('/success-url', name: 'success_url')]
-    public function successUrl($userId, UserRepository $userRepo): Response
+    public function successUrl(UserRepository $userRepo): Response
     {
-        $user = $userRepo->findOneBy(['id' => $userId]);
         return $this->render('stripe/success.html.twig', [
             'controller_name' => 'StripeController',
         ]);

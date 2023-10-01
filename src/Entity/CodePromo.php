@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CodePromoRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,6 +24,14 @@ class CodePromo
 
     #[ORM\Column]
     private ?float $pourcentage_reduction = null;
+
+    #[ORM\OneToMany(mappedBy: 'codepromo', targetEntity: Cart::class)]
+    private Collection $carts;
+
+    public function __construct()
+    {
+        $this->carts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -60,6 +70,36 @@ class CodePromo
     public function setPourcentageReduction(float $pourcentage_reduction): static
     {
         $this->pourcentage_reduction = $pourcentage_reduction;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Cart>
+     */
+    public function getCarts(): Collection
+    {
+        return $this->carts;
+    }
+
+    public function addCart(Cart $cart): static
+    {
+        if (!$this->carts->contains($cart)) {
+            $this->carts->add($cart);
+            $cart->setCodepromo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCart(Cart $cart): static
+    {
+        if ($this->carts->removeElement($cart)) {
+            // set the owning side to null (unless already changed)
+            if ($cart->getCodepromo() === $this) {
+                $cart->setCodepromo(null);
+            }
+        }
 
         return $this;
     }

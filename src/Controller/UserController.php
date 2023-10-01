@@ -29,12 +29,16 @@ class UserController extends AbstractController
     public function accountModif($email, UserRepository $userRepo, CityRepository $cityRepo, AdresseRepository $addrRepo, PaysRepository $paysRepo, Request $request): Response
     {
         $user = $userRepo->findOneBy(['email' => $email]);
-
         $form = $this->createForm(AccountModifFormType::class, $user);
         $form->handleRequest($request);
-
         if($form->isSubmitted() && $form->isValid()){
+            $user = $userRepo->findOneBy(['email' => $this->getUser()->email]);
             $cityName = $_POST['city'];
+            $userEmail = $_POST['email'];
+            $rue = $form['adresse']['rue']->getData();
+            $code_postal = $form['adresse']['code_postal']->getData();
+            $pays = $form['adresse']['pays']->getData();
+            $commAdrr = $form['adresse']['complement_adrr']->getData();
             $suggestions = [];
             $city = $cityRepo->findOneBy(['label' => $cityName]);
             if (!$city) {
@@ -49,21 +53,28 @@ class UserController extends AbstractController
                     }
                 }
             }
-            $adresse = new Adresse();
-            $adresse->setCity($city);
-            $addrRepo->save($adresse, true);
-
-            if($form['email']->getData() == $user->getEmail()){
-                $user->setEmail($user->getEmail());
+            if($user->getAdresse() == null){
+                $adresse = new Adresse();
+                $adresse->setCity($city);
+                $adresse->setRue($rue);
+                $adresse->setCodePostal($code_postal);
+                $adresse->setComplementAdrr($commAdrr);
+                $adresse->setPays($pays);
+                $addrRepo->save($adresse, true);
+                $user->setAdresse($adresse);
             }
-            $user->setAdresse($adresse->getId());
+            
+            // User data
+            $user->setEmail($userEmail);
+            $user->setName($form['name']->getData());
+            $user->setTelephone($form['telephone']->getData());
             $userRepo->save($user, true);
 
             return $this->redirectToRoute('account');
         }
         return $this->render('user/accountmodif.html.twig', [
             'form' => $form->createView(),
-            'user' => $user,
+            'user' => $user
         ]);
     }
 
@@ -75,7 +86,8 @@ class UserController extends AbstractController
 
         return $this->render('user/boncommande.html.twig', [
             'user' => $user,
-            'order' => $order
+            'order' => $order,
+            'email' => $email
         ]);
     }
 

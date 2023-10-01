@@ -16,7 +16,7 @@ class Adresse
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $rue = null;
 
     #[ORM\Column]

@@ -17,7 +17,10 @@ class AdresseFormType extends AbstractType
     {
         $builder
             ->add('rue', TextType::class, [
-                'label' => 'Rue'
+                'label' => 'Rue',
+                'attr' => [
+                    'name' => 'rue'
+                ]
             ])
             ->add('code_postal', TextType::class, [
                 'label' => 'Code Postal'
@@ -25,13 +28,6 @@ class AdresseFormType extends AbstractType
             ->add('complement_adrr', TextType::class, [
                 'label' => 'Complément d\'adresse'
             ])
-            // ->add('city', EntityType::class, [
-            //     'class' => City::class,
-            //     'choice_label' => 'label',
-            //     'label' => 'Ville',
-            //     'placeholder' => 'Sélectionnez un pays',
-            //     'required' => true
-            // ])
             ->add('pays', EntityType::class, [
                 'class' => Pays::class,
                 'choice_label' => 'nom',
