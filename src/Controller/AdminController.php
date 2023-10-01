@@ -12,10 +12,12 @@ use App\Form\CategoryFormType;
 use App\Form\CodePromoFormType;
 use App\Form\GetBonCommandeFormType;
 use App\Form\ProductAddTypeFormType;
+use App\Repository\CartRepository;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\CodePromoRepository;
 use App\Repository\OrderRepository;
+use App\Repository\PanierProduitRepository;
 use App\Repository\ProductImgRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -87,6 +89,9 @@ class AdminController extends AbstractController
         ]);
     }
 
+    /**
+     * Ajout de produits
+     */
     #[Route('/newproduct', name: 'adminnewproduct')]
     public function newProduct(EntityManagerInterface $entityManager, ProductImgRepository $productImgRepo, ProductRepository $produitRepo, #[Autowire('%product_photo_dir%')] string $photoDir, Request $request): Response
     {
@@ -120,6 +125,34 @@ class AdminController extends AbstractController
         ]);
     }
 
+    /***
+     * Suppression d'un article
+     */
+    #[Route('/del_product/{productid}', name: 'admindelproduct')]
+    public function DelProduct($productid, ProductImgRepository $productImgRepo, CartRepository $cartRepo, PanierProduitRepository $panierRepo, ProductRepository $produitRepo, #[Autowire('%product_photo_dir%')] string $photoDir, Request $request)
+    {
+        $product = $produitRepo->findOneBy(['id' => $productid]);
+        $panierPro = $product->getPanierProduits();
+        $imgproduct = $product->getProductImgs();
+        // Supprimer produitPanier et set nouveau price cart
+        foreach($panierPro as $panier){
+            $cart = $panier->getCart();
+            
+            $panierRepo->remove($panier, true);
+            $cart->setTotalPrice($cart->getTotalPrice() - $product->getPrice());
+            $cartRepo->save($cart, true);
+        }
+        // Supprimer Les images du produit et supprimer le produit
+        foreach($imgproduct as $img){
+            $productImgRepo->remove($img, true);
+        }
+        $produitRepo->remove($product, true);
+        return $this->redirectToRoute('admin_adminindex');
+    }
+
+    /***
+     * Modification d'un article
+     */
     #[Route('/modifproduct/{idProduct}', name: 'modif_product')]
     public function ModifProduct($idProduct, ProductImgRepository $productImgRepo, ProductRepository $produitRepo, #[Autowire('%product_photo_dir%')] string $photoDir, Request $request): Response
     {
@@ -150,6 +183,9 @@ class AdminController extends AbstractController
         ]);
     }
 
+    /***
+     * Création d'un article
+     */
     #[Route('/newcategory', name: 'newcategory')]
     public function newCategory(CategoryRepository $categoryRepo, Request $request): Response
     {
@@ -166,6 +202,11 @@ class AdminController extends AbstractController
         ]);
     }
 
+    /***
+     * Création, upload d'images pour produit
+     * Ajout d'un dossier si inexistant et upload
+     * des images dans ce dernier
+     */
     public function createFolderImg($photoDir, $img, $newProduit){
         $cheminDossierProduit = $photoDir . '/' . $newProduit->getId();
         $cheminDossierMini = $cheminDossierProduit . '/mini';
