@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\CartRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CartRepository;
+use App\Repository\PanierProduitRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 #[ORM\Entity(repositoryClass: CartRepository::class)]
 class Cart
@@ -132,5 +134,17 @@ class Cart
         $this->codepromo = $codepromo;
 
         return $this;
+    }
+
+    public function getCartPrice(PanierProduitRepository $panierRepo)
+    {
+        $products = $panierRepo->findBy(['cart' => $this->getId()]);
+        $sommPrice = 0;
+
+        foreach($products as $produit){
+            $sommPrice += $produit->getPrice();
+        }
+        $this->setTotalPrice($sommPrice);
+        return $sommPrice;
     }
 }

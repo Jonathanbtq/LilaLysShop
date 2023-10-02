@@ -23,9 +23,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CartController extends AbstractController
 {
     #[Route('/cart', name: 'cart')]
-    public function index(CartRepository $cartRepo, Request $request, CodePromoRepository $codePromoRepo): Response
+    public function index(CartRepository $cartRepo, Request $request, CodePromoRepository $codePromoRepo, PanierProduitRepository $panierRepo): Response
     {
         $cart = $cartRepo->findOneBy(['user' => $this->getUser()]);
+        $TotalPriceJson = $cart->getCartPrice($panierRepo);
         $products = $cart->getPanierProduits();
         $prdArray = [];
         foreach($products as $prd){
@@ -135,18 +136,25 @@ class CartController extends AbstractController
         }
         $cartRepo->save($cart, true);
         $cartItemCount = $cart->getNbProducts();
-        $cartPrice = $this->getCartPrice($cartRepo);
-        return $this->json(['count' => $cartItemCount, 'cartprice' => $cartPrice]);
+
+        // Appel de la méthod getCartPrice
+        $cartPrice = $this->getCartPrice($cartRepo, $panierRepo);
+        return $this->json(['count' => $cartItemCount]);
     }
 
     // Ajouter un effet d'attente sur le site pour le temps de réponse du serveur
+    /**
+     * Appel fonction supprProduitCart.js
+     * Récupération du prix total du panier
+     */
     #[Route('/get_pricecart_count', name: "get_pricecart_count")]
-    public function getCartPrice(CartRepository $cartRepo): JsonResponse
+    public function getCartPrice(CartRepository $cartRepo, PanierProduitRepository $panierRepo): JsonResponse
     {
         $cart = $cartRepo->findOneBy(['user' => $this->getUser()]);
-        $cartPrice = $cart->getTotalPrice();
+        $totalPrc = $cart->getCartPrice($panierRepo);
+        $cart->setTotalPrice($totalPrc);
 
-        return $this->json(['totalPrice' => $cartPrice]);
+        return $this->json(['totalPrice' => $totalPrc]);
     }
 
     #[Route('/get_item_delete/{id}', name: "get_item_delete")]

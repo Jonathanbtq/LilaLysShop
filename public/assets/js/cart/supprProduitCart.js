@@ -48,8 +48,9 @@ function DeleteProductCart(productId){
         .then(response => response.json())
         .then(data => {
             const cartItemCountElement = document.querySelectorAll('.cart_total_price');
+            let datainfo = JSON.parse(data.totalPrice);
             cartItemCountElement.forEach(div => {
-                div.textContent = data.totalPrice;
+                div.textContent = datainfo.content['totalPrice'];
             })
         })
         .catch(error => {
