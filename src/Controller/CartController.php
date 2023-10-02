@@ -92,12 +92,16 @@ class CartController extends AbstractController
         $cartRepo->save($cart, true);
 
         // Création de la ligne produit
-        $panierExisting = $panierProduitRepo->findOneBy(['id_client' => $this->getUser()]);
-        if($panierExisting && $panierExisting->getIdProduit()->getId() == $product->getId()){
-            $nbProduct = $panierExisting->getNbProduct();
-            $panierExisting->setNbProduct($nbProduct + 1);
-            $panierExisting->setPrice($panierExisting->getPrice() * $panierExisting->getNbProduct());
-            $panierProduitRepo->save($panierExisting, true);
+        $panierExisting = $panierProduitRepo->findBy(['id_client' => $this->getUser()]);
+        if($panierExisting){
+            foreach($panierExisting as $prdExisting){
+                if($prdExisting->getIdProduit()->getId() == $product->getId()){
+                    $nbProduct = $prdExisting->getNbProduct();
+                    $prdExisting->setNbProduct($nbProduct + 1);
+                    $prdExisting->setPrice($prdExisting->getPrice() * $prdExisting->getNbProduct());
+                    $panierProduitRepo->save($prdExisting, true);
+                }
+            }
         }else{
             $ligneProduit = new PanierProduit();
             $ligneProduit->setCart($cart);
