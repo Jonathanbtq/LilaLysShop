@@ -34,7 +34,8 @@
                             <div class="dropdown_cart_card">
                                 <img src="/uploads/photos/{{product.getIdProduit.getId}}/mini/{{product.getIdProduit.getProductImage}}">
                                 <div class="drp_crt_rgt">
-                                    <p>{{product.getIdProduit.name}}<p>
+                                    <a href="{{path('product', {idproduit : product.id})}}">{{product.getIdProduit.name}}</a>
+                                    <p>Quantités : {{product.getNbProduct}}</p>
                                     <p>{{product.getIdProduit.price}}</p>
                                     <button data-product-id="{{product.getIdProduit.getId}}" class="cart_delete_product_btn">X</button>
                                 </div>
@@ -43,7 +44,7 @@
                             <div class="drp_crt_bot">
                                 <p>Sous-total: {{app.user.getCart.getTotalPrice}}</p>
                                 <p>Taxe: 15%</p>
-                                <p>Total: {{app.user.getCart.getTotalPrice}}</p>
+                                <p class="nav_cart_price">Total: {{app.user.getCart.getTotalPrice}}</p>
                                 <a class="a_see_panier" href="{{path('cart')}}">Voir mon panier</a>
                             </div>
                         {% else %}

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CartController!{% endblock %}
+
+{% block body %}
+    <div class="index_ctn">
+        <div class="checkout_wtn">
+            <div class="cart_check_ctn">
+                <div id="paypal-button-container" class="paypal-button-container">
+                    <a href=""></a>
+                    <img src="{{asset('assets/images/paypal/Paypal-Logo.png')}}" alt="">
+                </div>
+                <div class="cart_check_spr">
+                    <div class="crt_chk_ligne"></div>
+                    <p>or</p>
+                    <div class="crt_chk_ligne"></div>
+                </div>
+                <div class="crt_chek_bank">
+                    <p>Carte bancaire</p>
+                </div>
+                <p>Paiement</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

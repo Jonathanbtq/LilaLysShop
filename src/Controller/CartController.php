@@ -86,19 +86,30 @@ class CartController extends AbstractController
         if($this->getUser()){
             $cart->setUser($this->getUser());
         }
-        $cart->setNbProducts($cart->getNbProducts()+1);
+        $nbProduitCart = $cart->getNbProducts();
+        $cart->setNbProducts($nbProduitCart + 1);
         $cart->setTotalPrice($cart->getTotalPrice()+$product->getPrice());
         $cartRepo->save($cart, true);
 
         // Création de la ligne produit
-        $ligneProduit = new PanierProduit();
-        $ligneProduit->setCart($cart);
-        if($this->getUser()){
-            $ligneProduit->setIdClient($this->getUser());
+        $panierExisting = $panierProduitRepo->findOneBy(['id_client' => $this->getUser()]);
+        if($panierExisting && $panierExisting->getIdProduit()->getId() == $product->getId()){
+            $nbProduct = $panierExisting->getNbProduct();
+            $panierExisting->setNbProduct($nbProduct + 1);
+            $panierExisting->setPrice($panierExisting->getPrice() * $panierExisting->getNbProduct());
+            $panierProduitRepo->save($panierExisting, true);
+        }else{
+            $ligneProduit = new PanierProduit();
+            $ligneProduit->setCart($cart);
+            if($this->getUser()){
+                $ligneProduit->setIdClient($this->getUser());
+            }
+            $ligneProduit->setIdProduit($product);
+            $ligneProduit->setPrice($product->getPrice());
+            $ligneProduit->setNbProduct(1);
+            $panierProduitRepo->save($ligneProduit, true);
         }
-        $ligneProduit->setIdProduit($product);
-        $ligneProduit->setPrice($product->getPrice());
-        $panierProduitRepo->save($ligneProduit, true);
+        
         // $panierProduitRepo->persist($ligneProduit);
         // $panierProduitRepo->flush();
 
@@ -109,7 +120,10 @@ class CartController extends AbstractController
     public function getCartItemCount(CartRepository $cartRepo, PanierProduitRepository $panierRepo): JsonResponse
     {
         $panierCount = $panierRepo->findBy(['id_client' => $this->getUser()]);
-        $nbCount = count($panierCount);
+        $nbCount = 0;
+        foreach($panierCount as $nbproduct){
+            $nbCount = $nbCount + $nbproduct->getNbProduct();
+        }
 
         $cart = $cartRepo->findOneBy(['user' => $this->getUser()]);
         if($nbCount != null){
@@ -117,12 +131,13 @@ class CartController extends AbstractController
         }
         $cartRepo->save($cart, true);
         $cartItemCount = $cart->getNbProducts();
-        return $this->json(['count' => $cartItemCount]);
+        $cartPrice = $this->getCartPrice($cartRepo);
+        return $this->json(['count' => $cartItemCount, 'cartprice' => $cartPrice]);
     }
 
     // Ajouter un effet d'attente sur le site pour le temps de réponse du serveur
     #[Route('/get_pricecart_count', name: "get_pricecart_count")]
-    public function getCartPrice(CartRepository $cartRepo, PanierProduitRepository $panierRepo): JsonResponse
+    public function getCartPrice(CartRepository $cartRepo): JsonResponse
     {
         $cart = $cartRepo->findOneBy(['user' => $this->getUser()]);
         $cartPrice = $cart->getTotalPrice();
@@ -143,5 +158,19 @@ class CartController extends AbstractController
         $cartRepo->save($cart, true);
 
         return new JsonResponse('', Response::HTTP_NO_CONTENT);
+    }
+
+    #[Route('/checkoutcart/{cartid}', name: 'paiment_cart')]
+    public function paimentPage($cartid, CartRepository $cartRepo, Request $request, CodePromoRepository $codePromoRepo): Response
+    {
+        $cart = $cartRepo->findOneBy(['id' => $cartid]);
+        if($cart->getCodepromo() != null){
+            $PromoCode = $cart->getCodepromo();
+        }
+        
+        return $this->render('cart/paiementcart.html.twig', [
+            'cart' =>  $cart,
+            'recution_promo' => $PromoCode,
+        ]);
     }
 }

@@ -19,6 +19,7 @@
                         <div class="crt_check_details">
                             <p>{{product.getIdProduit.getName}}</p>
                             <p>{{product.getIdProduit.getDescription}}</p>
+                            <p>Quantités : {{product.getNbProduct}}</p>
                             <p>{{product.getIdProduit.getPrice}} €</p>
                             <button data-product-id="{{product.getIdProduit.getId}}" class="cart_delete_product_btn">Supprimer</button>
                         </div>
@@ -51,8 +52,23 @@
                     </div>
                     <div class="crt_paiement_wdt">
                         <p>PAIEMENT</p>
-                        <a href="{{path('stripe_checkout', {cart: cart.id})}}">Paiement</a>
-                        <p>NOUS ACCEPTIONS :</p>
+                        {# <a href="{{path('paiment_cart', {cartid: cart.id})}}">Passer au paiement</a> #}
+                    </div>
+                    <div class="checkout_wtn">
+                        <div class="cart_check_ctn">
+                            <div id="paypal-button-container" class="paypal-button-container">
+                                <a href="{{path('paypal', {idCart: cart.id})}}"></a>
+                                <img src="{{asset('assets/images/paypal/Paypal-Logo.png')}}" alt="">
+                            </div>
+                            <div class="cart_check_spr">
+                                <div class="crt_chk_ligne"></div>
+                                <p>or</p>
+                                <div class="crt_chk_ligne"></div>
+                            </div>
+                            <div class="crt_chek_bank">
+                                <a href="{{path('stripe_checkout', {cart: cart.id})}}">Carte bancaire</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

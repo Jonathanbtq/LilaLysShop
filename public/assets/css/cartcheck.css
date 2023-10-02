@@ -1,0 +1,67 @@
+.checkout_wtn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 50px;
+}
+.cart_check_ctn{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.paypal-button-container{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 90%;
+    align-items: center;
+    justify-content: center;
+    background: #ffc439;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 0 !important;
+}
+.paypal-button-container a{
+    position: absolute;
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+.paypal-button-container img{
+    width: 30%;
+}
+.cart_check_spr{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 !important;
+    width: 60%;
+}
+.crt_chk_ligne{
+    border-top: 1px grey solid;
+    width: 45%;
+    height: auto;
+}
+.crt_chek_bank{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: blue;
+    border-radius: 5px;
+    padding: 0 !important;
+    width: 90%;
+    height: 25px;
+}
+.crt_chek_bank a{
+    display: flex;
+    height: 100%;
+    color: white;
+    font-weight: bold;
+    align-items: center;
+}

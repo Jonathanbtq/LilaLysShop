@@ -25,6 +25,9 @@ class PanierProduit
     #[ORM\Column]
     private ?float $price = null;
 
+    #[ORM\Column]
+    private ?int $nb_product = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +77,18 @@ class PanierProduit
     public function setPrice(float $price): static
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getNbProduct(): ?int
+    {
+        return $this->nb_product;
+    }
+
+    public function setNbProduct(int $nb_product): static
+    {
+        $this->nb_product = $nb_product;
 
         return $this;
     }
