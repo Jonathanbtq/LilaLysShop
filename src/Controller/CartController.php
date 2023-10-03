@@ -94,16 +94,21 @@ class CartController extends AbstractController
 
         // Création de la ligne produit
         $panierExisting = $panierProduitRepo->findBy(['id_client' => $this->getUser()]);
+        $productExistsInCart = false;
+        
         if($panierExisting){
             foreach($panierExisting as $prdExisting){
                 if($prdExisting->getIdProduit()->getId() == $product->getId()){
                     $nbProduct = $prdExisting->getNbProduct();
                     $prdExisting->setNbProduct($nbProduct + 1);
-                    $prdExisting->setPrice($prdExisting->getPrice() * $prdExisting->getNbProduct());
+                    $prdExisting->setPrice($prdExisting->getIdProduit()->getPrice() * $prdExisting->getNbProduct());
                     $panierProduitRepo->save($prdExisting, true);
+                    $productExistsInCart = true;
+                    break;
                 }
             }
-        }else{
+        }
+        if (!$productExistsInCart) {
             $ligneProduit = new PanierProduit();
             $ligneProduit->setCart($cart);
             if($this->getUser()){
@@ -151,8 +156,10 @@ class CartController extends AbstractController
     public function getCartPrice(CartRepository $cartRepo, PanierProduitRepository $panierRepo): JsonResponse
     {
         $cart = $cartRepo->findOneBy(['user' => $this->getUser()]);
+        // Méthode permettant le calcul total du panier
         $totalPrc = $cart->getCartPrice($panierRepo);
         $cart->setTotalPrice($totalPrc);
+        $cartRepo->save($cart, true);
 
         return $this->json(['totalPrice' => $totalPrc]);
     }
