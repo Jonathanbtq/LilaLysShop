@@ -36,7 +36,7 @@ class StripeController extends AbstractController
                     ],
                     'unit_amount' => $price * 100,
                 ],
-                'quantity' => 1, // Vous pouvez ajuster la quantité en fonction de votre modèle de données
+                'quantity' => $panier->getNbProduct(), // Vous pouvez ajuster la quantité en fonction de votre modèle de données
             ];
         }
 
