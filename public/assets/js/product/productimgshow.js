@@ -9,8 +9,8 @@ img.forEach(element => {
     })
 });
 
-const leftArrow = document.querySelector('.fa-arrow-left');
-const rightArrow = document.querySelector('.fa-arrow-right');
+const leftArrow = document.querySelector('.leftArrow');
+const rightArrow = document.querySelector('.rightArrow');
 
 leftArrow.addEventListener('click', () => {
     // Récupérez l'URL de l'image actuellement affichée dans mainDiv

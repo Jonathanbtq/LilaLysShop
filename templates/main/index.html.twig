@@ -10,27 +10,34 @@
                 <p><a href="{{path('products')}}">DOUDOU</a></p>
             </div>
             <div class="idx_shop_ctn">
-                <h2>Tout nos produits</h2>
-                <div class="idx_shop_main">
-                    {% for product in products %}
-                        <div class="card_crochet_ctn idx_shop_card">
-                            <div class="idx_img_main_shop">
-                                <img src="/uploads/photos/{{product.id}}/mini/{{product.getProductImage}}" alt="">
+                <h2>Touts nos produits ></h2>
+                <div class="idx_shop_main slide_js_main">
+                    <div class="prd_card_arrow_index">
+                        <i id="left" class="fa-solid fa-arrow-left"></i>
+                        <i id="right" class="fa-solid fa-arrow-right"></i>
+                    </div>
+                    <div class="idx_img_container">
+                        {% for product in products %}
+                            <div class="card_crochet_ctn idx_shop_card">
+                                <a href="{{path('product', {idproduit : product.id})}}">
+                                    <div class="idx_img_main_shop">
+                                        <img src="/uploads/photos/{{product.id}}/mini/{{product.getProductImage}}" alt="">
+                                    </div>
+                                    <div class="idx_main_shop_desc">
+                                        <h3>{{ product.name }}</h3>
+                                        <p>{{ product.price }}€</p>
+                                        {# <p>#{{product.category.getName}}</p> #}
+                                        {# <a href="{{path('product', {idproduit : product.id})}}">Fiche produit</a> #}
+                                        {% if product.isHasDiscountedPrice == 1 %}
+                                            <p class="span_promo">Promo !</p>
+                                        {% endif %}
+                                    </div>
+                                    <i class="fa-solid fa-cart-shopping fa-xl btn_main_shop" data-product-id="{{product.id}}"></i>
+                                </a>
                             </div>
-                            <div class="idx_main_shop_desc">
-                                <h3>{{ product.name }}</h3>
-                                <p>{{ product.price }}€</p>
-                                {# <p>#{{product.category.getName}}</p> #}
-                                <a href="{{path('product', {idproduit : product.id})}}">Fiche produit</a>
-                                {% if product.isHasDiscountedPrice == 1 %}
-                                    <p class="span_promo">Promo !</p>
-                                {% endif %}
-                            </div>
-
-                            <i class="fa-solid fa-cart-shopping fa-xl btn_main_shop" data-product-id="{{product.id}}"></i>
-                        </div>
-                        <div id="image-clone"></div>
-                    {% endfor %}
+                            <div id="image-clone"></div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
             <div class="idx_deux_ctn">
