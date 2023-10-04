@@ -8,6 +8,7 @@ use Stripe\Checkout\Session;
 use App\Repository\CartRepository;
 use App\Repository\UserRepository;
 use App\Repository\OrderRepository;
+use App\Repository\PanierProduitRepository;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -80,7 +81,7 @@ class StripeController extends AbstractController
     }
 
     #[Route('/success-url', name: 'success_url')]
-    public function successUrl(UserRepository $userRepo, OrderRepository $orderRepo, CartRepository $cartRepo): Response
+    public function successUrl(UserRepository $userRepo, OrderRepository $orderRepo, CartRepository $cartRepo, PanierProduitRepository $panierProuitRepo): Response
     {
         $order = new Order();
         $user = $this->getUser();
@@ -116,7 +117,13 @@ class StripeController extends AbstractController
         $order->setIsValid(0);
 
         $orderRepo->save($order, true);
-        // $cartRepo->remove($cart, true);
+
+        $panierProduit = $cart->getPanierProduits();
+        foreach($panierProduit as $produit){
+            $panierProuitRepo->remove($produit, true);
+        }
+        $cart->setUser(Null);
+        $cartRepo->remove($cart, true);
 
         return $this->render('stripe/success.html.twig', [
             'controller_name' => 'StripeController',
