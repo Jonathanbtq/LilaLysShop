@@ -21,7 +21,8 @@ class StripeController extends AbstractController
     public function checkout($cart, $stripeSK, CartRepository $cartRepo, ProductRepository $productRepo): Response
     {
         $cart = $cartRepo->findOneBy(['id' => $cart]);
-
+        $linePromo = [];
+        
         $reduction = null;
         if($cart->getCodepromo() != null){
             $reduction = $cart->getCodepromo()->getPourcentageReduction();
@@ -58,7 +59,9 @@ class StripeController extends AbstractController
                 'quantity' => $panier->getNbProduct(), // Vous pouvez ajuster la quantité en fonction de votre modèle de données
             ];
         }
-        array_push($lineItems, $linePromo);
+        if($cart->getCodepromo() != null){
+            array_push($lineItems, $linePromo);
+        }
 
         Stripe::setApiKey($stripeSK);
 

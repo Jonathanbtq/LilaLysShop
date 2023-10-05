@@ -89,7 +89,6 @@
 .idx_img_container{
     display: flex;
     flex-wrap: nowrap;
-    justify-content: space-between;
     align-items: center;
     width: 100%;
     overflow: hidden;
