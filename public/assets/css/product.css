@@ -109,11 +109,26 @@
 .prd_card_desc p{
     font-size: 20px;
 }
+.prd_card_desc_top p:nth-child(3){
+    display: none;
+}
+.prd_card_desc_top{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: 80%;
+}
+.prd_dtl_prc p:nth-child(2){
+    display: none;
+}
 .prd_fiche_technique{
     margin-top: 50px;
 }
 .prd_fiche_technique p{
     margin-top: 20px;
+}
+.prd_mobile_desc{
+    display: none;       
 }
 .prd_reseaux{
     display: flex;
@@ -144,14 +159,15 @@
 @media screen and (max-width: 1050px) {
     
 }
-@media screen and (max-width: 600px) {
-
-}
-@media screen and (max-width: 300px) {
+@media screen and (max-width: 500px) {
     .prd_wth{
         width: 100% !important;
+        height: auto;
         margin-top: 48px !important;
         background-color: #BC6464;
+    }
+    .prd_wth p:nth-child(1){
+        margin: 0 30px 0 30px;
     }
     .prd_top{
         flex-direction: column !important;
@@ -165,12 +181,10 @@
         border-bottom: none !important;
     }
     .prd_card_img img{
-        max-height: 230px !important;
-        min-width: 230px !important;
+        min-height: 270px !important;
+        min-width: 270px !important;
         border-radius: 5px;
-    }
-    .prd_card_img_arrow{
-        
+        z-index: 999;
     }
     .prd_card_arrow{
         display: none;
@@ -181,13 +195,92 @@
 
     .prd_card_desc{
         width: 100% !important;
-        margin-top: 125px;
-        padding-top: 125px;
-        border-radius: 25px;
+        margin-top: 160px;
+        padding-top: 120px;
+        border-radius: 10px 10px 0 0;
         background-color: #FFF7F1;
         flex-wrap: wrap !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        position: relative !important;
     }
-    .prd_card_desc h2{
-        font-size: 20px !important;
+    .linear_prd_card{
+        display: flex;
+        position: absolute;
+        top: -25px;
+        height: 10vw;
+        width: 100%;
+        background: linear-gradient(to top, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.3) 20%, rgba(255, 255, 255, 0.01) 100%);
+    }
+    .prd_card_desc_top h2{
+        font-size: 25px !important;
+        width: 60% !important;
+    }
+    .prd_card_desc_top p:nth-child(3){
+        display: flex;
+        font-size: 25px !important;
+        width: 30% !important;
+        justify-content: end;
+    }
+    .prd_card_desc_top p:nth-child(2){
+        display: none;
+    }
+    /***Deuxieme partie****/
+    .prd_dtl_prc {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        width: 80%;
+        margin: 20px 0 0 0;
+    }
+    .prd_dtl_prc p:nth-child(2){
+        display: flex;
+        margin: 0 !important;
+        text-align: center;
+    }
+    .prd_dtl_prc p:nth-child(1), .prd_dtl_prc i{
+        display: none;
+    }
+    .prd_fiche_technique{
+        display: none !important;
+    }
+    .prd_mobile_desc{
+        display: flex !important;
+        flex-wrap: wrap;
+        width: 80%;
+    }
+    .prd_mbl_cat{
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+        width: 100%;
+    }
+    .prd_mbl_cat p{
+        font-size: 18px;
+    }
+    .prd_mbl_cat p:nth-child(1){
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .prd_mbl_btn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 20vw;
+        width: 100%;
+        background-color: black;
+        border-radius: 50px;
+        margin-top: 20px;
+    }
+    .prd_mbl_btn a{
+        color: white;
+        font-weight: bold;
+    }
+    .prd_reseaux{
+        width: 80%;
+        margin-top: 20px;
+    }
+    .prd_res_wth{
+        justify-content: end;
     }
 }

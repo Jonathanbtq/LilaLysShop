@@ -4,7 +4,8 @@
     flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
-    background-color: rgb(163, 57, 57);
+    background-color: var(--red-txt);
+    /* background-color: rgb(163, 57, 57); */
     width: 100%;
     z-index: 999;
     padding: 5px 0 5px 0;
