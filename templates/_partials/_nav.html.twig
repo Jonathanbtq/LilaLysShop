@@ -10,7 +10,6 @@
             </h1>
             {# <a class="title_site" href="{{ path('main') }}"><img src="{{ asset('assets/images/index/logolinkz.png') }}" alt=""></a> #}
         </div>
-        <!---collapse navbar-collapse-->
         <div class="nav_ctn" id="navbarNav">
             <ul class="navbar_nav_ul">
                 <li class="nav_item_btn">
@@ -82,6 +81,54 @@
                 </li>
             </ul>
         </div>
+        <div id="mySidenav" class="sidenav">
+            <a id="closeBtn" href="#" class="close">×</a>
+            <ul>
+                <li class="">
+                    <a href="{{path('products')}}">Doudou</a>
+                </li>
+                <li class="">
+                    <a href="{{path('pattern')}}">Paterne</a>
+                </li>
+                <li class="">
+                    <a href="{{path('freestuff')}}">Free stuff</a>
+                </li> 
+                <li class="">
+                    {% if app.user %}
+                        {% if app.user.name != null %}
+                            <a class="idx_acc_a" href="{{ path('login')}}">{{app.user.name}} v</a>
+                        {% else %}
+                            <a class="idx_acc_a" href="{{ path('login')}}">Compte v</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{{ path('login')}}"><img src="{{asset('assets/images/index/user.png')}}" alt=""></a>
+                    {% endif %}
+                    
+                    <ul class="dropdown">
+                        {% if app.user %}
+                            <li><a href="{{path('account')}}">Compte</a></li>
+                            {% if app.user.roles[0] == "ROLE_ADMIN" %}
+                                <li><a href="{{path('admin_adminindex')}}">Admin</a></li>
+                            {% endif %}
+                        {% else %}
+                            <li><a href="{{path('login')}}">Compte</a></li>
+                        {% endif %}
+                        {% if app.user %}
+                            <li><a href="{{path('logout')}}">Logout</a></li>
+                        {% else %}
+                            <li><a href="{{path('login')}}">Login</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <a href="#" id="openBtn">
+            <span class="burger-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+        </a>
     </div>
-	
 </nav>

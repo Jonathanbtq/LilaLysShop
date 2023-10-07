@@ -88,8 +88,6 @@
 }
 .idx_img_container{
     display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
     width: 100%;
     overflow: hidden;
 } 
@@ -132,3 +130,54 @@
     left: 0;
 }
 /*********Les cartes d'item de vente dans main*********/
+
+@media screen and (max-width: 1300px) {
+    .index_wtd{
+        width: 70% !important;
+    }
+    .card_crochet_ctn{
+        height: 20vw !important;
+        width: 21vw !important;
+    }
+}
+@media screen and (max-width: 1050px) {
+    .index_wtd{
+        width: 80% !important;
+    }
+}
+@media screen and (max-width: 600px) {
+    .index_ctn{
+        padding-top: 40px !important;
+    }
+    .index_wtd{
+        width: 100% !important;
+    }
+    .idx_first_ctn{
+        height: 38vw;
+    }
+    .prd_card_arrow_index{
+        width: 95% !important;
+    }
+    .card_crochet_ctn{
+        width: 50% !important;
+        height: 30vw !important;
+    }
+    .idx_deux_ctn{
+        height: 30vw;
+    }
+}
+@media screen and (max-width: 600px) {
+    .idx_first_ctn{
+        height: 60vw;
+    }
+    .prd_card_arrow_index{
+        width: 95% !important;
+    }
+    .card_crochet_ctn{
+        width: 50% !important;
+        height: 30vw !important;
+    }
+    .idx_deux_ctn{
+        height: 60vw;
+    }
+}

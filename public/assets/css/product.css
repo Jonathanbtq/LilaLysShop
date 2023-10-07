@@ -137,3 +137,57 @@
 .prd_res_wth a:nth-child(3){
     color: #276e72;
 }
+
+@media screen and (max-width: 1300px) {
+    
+}
+@media screen and (max-width: 1050px) {
+    
+}
+@media screen and (max-width: 600px) {
+
+}
+@media screen and (max-width: 300px) {
+    .prd_wth{
+        width: 100% !important;
+        margin-top: 48px !important;
+        background-color: #BC6464;
+    }
+    .prd_top{
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: none !important;
+        position: relative !important;
+    }
+    .prd_card_img{
+        width: 95%;
+        position: absolute !important;
+        border-bottom: none !important;
+    }
+    .prd_card_img img{
+        max-height: 230px !important;
+        min-width: 230px !important;
+        border-radius: 5px;
+    }
+    .prd_card_img_arrow{
+        
+    }
+    .prd_card_arrow{
+        display: none;
+    }
+    .prd_img_slide{
+        display: none;
+    }
+
+    .prd_card_desc{
+        width: 100% !important;
+        margin-top: 125px;
+        padding-top: 125px;
+        border-radius: 25px;
+        background-color: #FFF7F1;
+        flex-wrap: wrap !important;
+    }
+    .prd_card_desc h2{
+        font-size: 20px !important;
+    }
+}
